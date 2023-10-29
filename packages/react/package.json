@@ -1,0 +1,30 @@
+{
+  "name": "farcasterkit",
+  "version": "0.0.1",
+  "description": "the easiest way to build farcaster apps",
+  "main": "index.ts",
+  "scripts": {
+    "test": "ts index.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dylsteck/farcasterkit.git"
+  },
+  "keywords": [
+    "react",
+    "rest-api",
+    "reacthooks",
+    "farcaster"
+  ],
+  "author": "dylsteck",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dylsteck/farcasterkit/issues"
+  },
+  "homepage": "https://github.com/dylsteck/farcasterkit#readme",
+  "dependencies": {
+    "react": "^18.2.0",
+    "tsup": "^7.2.0",
+    "typescript": "^5.2.2"
+  }
+}
