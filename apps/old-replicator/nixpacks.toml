@@ -1,0 +1,3 @@
+# source: https://github.com/stephancill/hub-monorepo/blob/postgres-heroku/packages/hub-nodejs/examples/replicate-data-postgres/nixpacks.toml
+[phases.setup]
+nixPkgs = ['...', 'python3', 'gcc']
