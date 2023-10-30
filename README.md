@@ -26,7 +26,7 @@ otherwise you can run our api, which uses the official farcaster indexer
 - `packages/react` - react hooks and modules, which are available to install with `npm install farcasterkit/react`
 - `apps/api` - the rest api for farcaster kit
 - `apps/web` - the homepage and docs for farcaster kit, which you can [view here](https://farcasterkit.com)
-- coming soon: indexer -- the indexer powering farcaster kit(this was already open sourced by farcaster, so it will just be linked to here)
+- `apps/old-replicator` -- the postgres replicator powering farcaster kit, built by farcaster. a migration to the [new replicator](https://github.com/farcasterxyz/hub-monorepo/tree/main/apps/replicator) will happen soon!
 
 <br/>
 

@@ -1,5 +1,11 @@
 import Layout from "@/components/Layout";
+import FarcasterIcon from "@/components/icons/FarcasterIcon";
+import GithubIcon from "@/components/icons/GithubIcon";
 import { Section } from "@/components/sections/Section";
+import CastsDocs from "@/components/sections/docs/CastsDocs";
+import UsersDocs from "@/components/sections/docs/UsersDocs";
+import UtilsDocs from "@/components/sections/docs/UtilsDocs";
+import Footer from "@/components/sections/homepage/Footer";
 import Link from "next/link";
 
 export default function Docs(){
@@ -32,6 +38,21 @@ export default function Docs(){
                     <p>otherwise you can run our api, which uses the official farcaster indexer</p>
                 </div>
             </Section>
+            <CastsDocs />
+            <UsersDocs />
+            <UtilsDocs />
+            <div className="flex flex-row gap-2 items-center p-4 pl-6">
+                <div>   
+                    <Link href="https://warpcast.com/dylsteck.eth">
+                        <FarcasterIcon />
+                    </Link>
+                </div>
+                <div>   
+                    <Link href="https://github.com/dylsteck/farcasterkit">
+                        <GithubIcon />
+                    </Link>
+                </div>
+            </div>
         </Layout>
     )
 }

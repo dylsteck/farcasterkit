@@ -5,6 +5,7 @@ import cors from "cors";
 
 import { CastsRouter } from "./modules/casts/controller";
 import { UsersRouter } from "modules/users/controller";
+import { warpcastChannels } from "utils/warpcastChannels";
 
 export const createServer = () => {
   const app = express();
@@ -17,6 +18,9 @@ export const createServer = () => {
     // .get("/message/:name", (req, res) => {
     //   return res.json({ message: `hello ${req.params.name}` });
     // })
+    .get("/utils/warpcastChannels", (req, res) => {
+      return res.json({channels: warpcastChannels})
+    })
     .use(CastsRouter)
     .use(UsersRouter);
 

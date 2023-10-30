@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { db } from "clients/kysely";
+import { db } from "utils/kysely";
 import { sql } from "kysely";
 import { KyselyDB } from "types/database.t";
 
@@ -15,5 +15,13 @@ router.get("/users/user", async (req, res) => {
     user: user.rows[0]
   });
 });
+
+// router.get("/users/616", async(req, res) => {
+//   const fidQuery = sql<KyselyDB['users']>`SELECT * from users where fid = 616 LIMIT 1`;
+//   const user = await fidQuery.execute(db);
+//   return res.json({
+//     user: user.rows[0]
+//   });
+// });
 
 export const UsersRouter = router;
