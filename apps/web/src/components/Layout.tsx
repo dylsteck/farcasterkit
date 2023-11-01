@@ -2,6 +2,7 @@ import Image from 'next/image'
 import { Inter } from 'next/font/google'
 import type { ReactNode } from 'react';
 import Head from 'next/head';
+import Script from 'next/script';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -34,6 +35,16 @@ export default function Layout({ children }: LayoutProps) {
         <meta name="twitter:image" content="https://i.imgur.com/wBGSE0g.png" />
         <meta name="twitter:creator" content="@Dylan_Steck" />
       </Head>
+      <Script src="https://www.googletagmanager.com/gtag/js?id=G-XW9TS556EE" />
+      <Script id="google-analytics">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'G-XW9TS556EE');
+        `}
+      </Script>
       {children}
     </main>
   )

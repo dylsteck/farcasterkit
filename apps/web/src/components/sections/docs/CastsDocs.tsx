@@ -22,9 +22,12 @@ export default function CastsDocs(){
                     <p className="pt-[2.5vh]">a GET request that returns the latest casts on farcaster</p>
                     <p className="pt-2">input:</p>
                     <ol className="parenthetical-list-style">
+                        <li>fid - number(optional)</li>
+                        <li>parent_url - string(optional)</li>
                         <li>cursor - number(optional)</li>
                         <li>limit - number(optional, max = 100)</li>
                     </ol>
+                    <p className="pt-[2.5vh]">note: passing fid or parent_url gets you the feed for either, but right now you can only input one of them -- not both</p>
                 </div>
             </Section>
             <Section>

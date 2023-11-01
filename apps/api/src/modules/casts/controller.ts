@@ -30,12 +30,12 @@ const router = Router();
 // });
 
 router.get("/casts/latest", async(req, res) => {
-  console.log(req);
-    // const { fid, parent_url, cursor, limit } = req.query;
-
-    // const fidWhere = fid ? sql`WHERE fid = ${fid}` : sql``;
-    // const parentUrlWhere = parent_url ? sql`WHERE parent_url = ${parent_url}` : sql``;
-    // const validLimit = limit ? limit : `50`;
+    const { fid, parent_url, cursor, limit } = req.query;
+    
+    const fidWhere = fid ? sql`WHERE casts.fid = ${fid}` : sql``;
+    const parentUrlWhere = parent_url ? sql`WHERE casts.parent_url = ${parent_url}` : sql``;
+    const validCursor = cursor ? cursor : `0`;
+    const validLimit = limit ? limit : `50`;
     const castsQuery = sql<KyselyDB['casts']>`
       SELECT 
           *,
@@ -46,13 +46,17 @@ router.get("/casts/latest", async(req, res) => {
           WHERE fid = casts.fid AND type = 1) as pfp
       FROM
           casts
-      LIMIT 50;
+      ${fidWhere}
+      ${parentUrlWhere}
+      ORDER BY timestamp desc
+      OFFSET ${validCursor}
+      LIMIT ${validLimit};
     `;
     
     const cast = await castsQuery.execute(db);
-    console.log(cast);
     return res.json({
-      cast: cast.rows
+      casts: cast.rows,
+      nextCursor: cursor ? parseInt(cursor as string) + cast.rows.length : cast.rows.length
     });
 });
 
@@ -76,7 +80,7 @@ router.get("/casts/replies", async(req, res) => {
     `;
     
     const cast = await castsQuery.execute(db);
-    console.log(cast);
+    // console.log(cast);
     return res.json({
       cast: cast.rows
     });
@@ -101,7 +105,7 @@ router.get("/casts/search", async(req, res) => {
 
   
   const cast = await castsQuery.execute(db);
-  console.log(cast);
+  // console.log(cast);
   return res.json({
     cast: cast.rows
   });
