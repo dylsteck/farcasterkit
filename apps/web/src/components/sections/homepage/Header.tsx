@@ -4,7 +4,7 @@ import CopyIcon from "../../icons/CopyIcon";
 
 
 export default function Header(){
-    const installCommand = `npx create-farcaster-app@latest`;
+    const installCommand = `npx create-farcaster-app`;
     const handleCopy = () => {
         void navigator.clipboard.writeText(installCommand).catch(() => {
           console.error('Failed to copy install command to clipboard');
@@ -17,7 +17,7 @@ export default function Header(){
             <div className="flex flex-row justify-between">
                 <div>
                     <h1 className="font-medium text-4xl md:text-6xl">farcaster kit</h1>
-                    <h3 className="text-xl md:text-2xl">the easiest way to build farcaster apps</h3>
+                    <h3 className="text-xl md:text-2xl">react hooks for the best farcaster apps</h3>
                 </div>
                 <div className="flex flex-col text-right font-medium">
                     <Link href="/docs">
@@ -37,9 +37,10 @@ export default function Header(){
             <Link href="/docs">
                 <p className={`text-xl text-fcPurple`}>view docs</p>
             </Link>
-            <Link href="https://withcortex.com">
-                <p className="pt-[5vh] pb-[2.5vh]">powered by nexus</p>
-            </Link>
+            
+            <p className="pt-[5vh] pb-[2.5vh]">
+                powered by <Link href="https://withcortex.com">nexus</Link>
+            </p>
         </div>
     </Section>
     )

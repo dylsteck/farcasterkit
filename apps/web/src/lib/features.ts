@@ -1,11 +1,14 @@
 export const features = [
     'rest api', 
-    'react hooks',
-    'built in modules', 
+    'read features',
+    'channels module', 
     'app-first feeds', 
     'historic data',
-    'hub support',
-    'auth hooks with viem',
-    'warpcast channels module',
-    'signups component'
+    'user pages'
+];
+
+export const comingSoon = [
+    'auth hooks',
+    'write actions',
+    'multi package/provider support'
 ];

@@ -34,8 +34,6 @@ export default function Docs(){
                         <li>a rest api to access app-first data</li>
                         <li>a npm package with react hooks and modules</li>
                     </ol>
-                    <p className="pt-2">using farcaster kit is free up to 2,000 requests/week. request an api key here</p>
-                    <p>otherwise you can run our api, which uses the official farcaster indexer</p>
                 </div>
             </Section>
             <CastsDocs />

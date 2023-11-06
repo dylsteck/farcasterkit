@@ -1,6 +1,7 @@
+import SoonIcon from "@/components/icons/SoonIcon";
 import CheckmarkIcon from "../../icons/CheckmarkIcon";
 import { Section } from "../Section";
-import { features } from "@/lib/features";
+import { comingSoon, features } from "@/lib/features";
 
 type FeatureListProps = {
     features: string[]
@@ -12,6 +13,7 @@ const Features = () => {
         {[0, 1, 2].map((index) => (
           <FeatureList key={index} features={features.slice(index * 3, index * 3 + 3)} />
         ))}
+        <ComingSoonList features={comingSoon} />
       </div>
     );
 };
@@ -22,6 +24,19 @@ const FeatureList = ({ features }: FeatureListProps) => {
         {features.map((feature: string, i: number) => (
           <div key={i} className="mb-2 flex flex-row items-center gap-2">
             <CheckmarkIcon />
+            <p>{feature}</p>
+          </div>
+        ))}
+      </div>
+    );
+  };
+
+  const ComingSoonList = ({ features }: FeatureListProps) => {
+    return (
+      <div className="flex-row pr-4">
+        {features.map((feature: string, i: number) => (
+          <div key={i} className="mb-2 flex flex-row items-center gap-2">
+            <SoonIcon />
             <p>{feature}</p>
           </div>
         ))}
