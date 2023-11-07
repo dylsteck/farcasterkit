@@ -1,13 +1,12 @@
 {
     "name": "create-farcaster-app",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "description": "scaffolds a default farcaster app",
-    "main": "index.mjs",
-    "bin": {
-        "create-farcaster-app": "./index.mjs"
-    },
+    "bin": "cli.mjs",
     "type": "module",
-    "scripts": {},
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+      },
     "keywords": [
         "farcaster",
         "starter"
@@ -22,7 +21,8 @@
         "url": "https://github.com/dylsteck/farcasterkit/packages/create-farcaster-app/issues"
     },
     "homepage": "https://github.com/dylsteck/farcasterkit/packages/create-farcaster-app#readme",
-    "devDependencies": {
+    "dependencies": {
+        "child_process": "^1.0.2",
         "@types/readline-sync": "^1.4.6",
         "readline-sync": "^1.4.10",
         "ts-node": "^10.0.0",
