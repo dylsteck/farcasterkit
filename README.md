@@ -20,11 +20,12 @@ farcaster kit is made up of two parts:
 - 🔜 multi package/provider support
 
 ### how this repo is structured
-- `packages/react` - react hooks and modules, which are available to install with `npm install farcasterkit`
+- `packages/farcasterkit` - react hooks and modules, which are available to install with `npm install farcasterkit`
+- `packages/create-farcaster-app` - a CLI tool to scaffold an app using `npx create-farcaster-app`, which lives at `examples/starter`
 - `apps/api` - the rest api for farcaster kit
 - `apps/web` - the homepage and docs for farcaster kit, which you can [view here](https://farcasterkit.com)
 - `apps/old-replicator` -- the postgres replicator powering farcaster kit, built by farcaster. a migration to the [new replicator](https://github.com/farcasterxyz/hub-monorepo/tree/main/apps/replicator) will happen soon!
-
+- `examples/starter` - a starter app which you can scaffold by using `npx create-farcaster-app`
 <br/>
 
 built by [dylsteck](https://github.com/dylsteck) and powered by [nexus](https://withcortex.com)
