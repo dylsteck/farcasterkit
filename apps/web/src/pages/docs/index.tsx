@@ -3,6 +3,7 @@ import FarcasterIcon from "@/components/icons/FarcasterIcon";
 import GithubIcon from "@/components/icons/GithubIcon";
 import { Section } from "@/components/sections/Section";
 import CastsDocs from "@/components/sections/docs/CastsDocs";
+import HooksDocs from "@/components/sections/docs/HooksDocs";
 import UsersDocs from "@/components/sections/docs/UsersDocs";
 import UtilsDocs from "@/components/sections/docs/UtilsDocs";
 import Footer from "@/components/sections/homepage/Footer";
@@ -39,6 +40,7 @@ export default function Docs(){
             <CastsDocs />
             <UsersDocs />
             <UtilsDocs />
+            <HooksDocs/>
             <div className="flex flex-row gap-2 items-center p-4 pl-6">
                 <div>   
                     <Link href="https://warpcast.com/dylsteck.eth">

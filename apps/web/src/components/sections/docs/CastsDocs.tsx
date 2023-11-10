@@ -6,8 +6,9 @@ export default function CastsDocs(){
         <>
             <Section>
                 <div className="pb-[2.5vh]">
+                    <p className="text-lg font-medium pb-4">API docs</p>
                     <p className="text-lg font-medium">casts/:hash</p>
-                    <p className="pt-[2.5vh]">a GET request that returns a cast given its hash</p>
+                    <p className="pt-[1.5vh]">a GET request that returns a cast given its hash</p>
                     <p className="pt-2">input:</p>
                     <ol className="parenthetical-list-style">
                         <li>hash - string</li>
@@ -45,7 +46,7 @@ export default function CastsDocs(){
             <Section>
                 <div className="pb-[2.5vh]">
                     <p className="text-lg font-medium">casts/search</p>
-                    <p className="pt-[2.5vh]">a GET request that searches casts given a keyword(s)</p>
+                    <p className="pt-[2.5vh]">a GET request that searches casts given a query</p>
                     <p className="pt-2">input:</p>
                     <ol className="parenthetical-list-style">
                         <li>query - string</li>

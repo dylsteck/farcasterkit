@@ -1,41 +1,66 @@
-"use client";
+import React from 'react';
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import axios from 'axios';
 
-interface FarcasterKitProviderProps {
+type FarcasterKitProviderProps =  {
   baseURL?: string;
   children: ReactNode;
 }
 
-interface FarcasterKitContextType {
+type FarcasterKitContextType =  {
   baseURL: string;
 }
 
-export interface LatestCastsParams {
+export type LatestCastsParams =  {
     fid?: number;
     parent_url?: string;
     cursor?: number;
     limit?: number;
 }
 
-export interface CastParams {
+export type CastParams = {
     hash?: string;
     cursor?: number;
     limit?: number;
 }
 
-export interface SearchCastParams{
+export type SearchCastParams = {
     query: string;
     cursor?: number;
     limit?: number;
 }
 
-export interface UserParams{
+export type UserParams = {
     fid?: number;
     fname?: string;
     cursor?: number;
     limit?: number;
 }
+
+export type CastEmbed =  {
+  url?: string;
+  castId?: string;
+}
+
+export type Cast =  {
+  id: string;
+  created_at: Date;
+  updated_at: Date;
+  deleted_at: Date | null;
+  timestamp: Date;
+  fid: number;
+  text: string;
+  hash: string;
+  parent_hash: string | null;
+  fname: string | null;
+  parent_fid: number | null;
+  parent_url: string | null;
+  pfp: string | null;
+  embeds: CastEmbed[];
+  mentions: number[];
+  mentions_positions: number[];
+}
+
 
 const FarcasterKitContext = createContext<FarcasterKitContextType | undefined>(undefined);
 

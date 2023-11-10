@@ -5,7 +5,7 @@ import { KyselyDB } from "types/database.t";
 
 const router = Router();
 
-router.get("/users/user", async (req, res) => {
+router.get("/user", async (req, res) => {
   const { fid, fname } = req.query;
   const fidQuery = sql<KyselyDB['users']>`SELECT * from users where fid = CAST(${fid} AS bigint) LIMIT 1`;
   const fnameQuery = sql<KyselyDB['users']>`SELECT * from users where fname = ${fname} LIMIT 1`;

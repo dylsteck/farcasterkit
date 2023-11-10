@@ -1,6 +1,6 @@
 {
   "name": "farcasterkit",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "react hooks for the best farcaster apps",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

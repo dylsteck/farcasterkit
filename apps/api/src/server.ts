@@ -1,28 +1,47 @@
-import { json, urlencoded } from "body-parser";
-import express from "express";
+import express, { Request, Response, NextFunction } from "express";
 import morgan from "morgan";
 import cors from "cors";
-
+import { json, urlencoded } from "body-parser";
 import { CastsRouter } from "./modules/casts/controller";
-import { UsersRouter } from "modules/users/controller";
-import { warpcastChannels } from "utils/warpcastChannels";
+import { UsersRouter } from "./modules/users/controller";
+import { warpcastChannels } from "./utils/warpcastChannels";
+import { PostHog } from 'posthog-node';
+
+const posthog = new PostHog(`${process.env.POSTHOG_API_KEY ?? ''}`, { host: 'https://app.posthog.com' });
 
 export const createServer = () => {
   const app = express();
-  app
-    .disable("x-powered-by")
-    .use(morgan("dev"))
-    .use(urlencoded({ extended: true }))
-    .use(json())
-    .use(cors())
-    // .get("/message/:name", (req, res) => {
-    //   return res.json({ message: `hello ${req.params.name}` });
-    // })
-    .get("/utils/warpcastChannels", (req, res) => {
-      return res.json({channels: warpcastChannels})
-    })
-    .use(CastsRouter)
-    .use(UsersRouter);
 
+  app.disable("x-powered-by")
+     .use(morgan("dev"))
+     .use(urlencoded({ extended: true }))
+     .use(json())
+     .use(cors());
+
+  app.use((req: Request, res: Response, next: NextFunction) => {
+    if (req.originalUrl === '/sw.js') {
+      return next();
+    }
+    // Logging solely to prevent improper API usage
+    const userIp = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+    posthog.capture({
+      distinctId: userIp as string,
+      event: 'route_visited',
+      properties: {
+        route: req.originalUrl,
+        method: req.method
+      }
+    });
+    next();
+  });
+  app.use('/casts', CastsRouter)
+     .use('/users', UsersRouter)
+     .get("/utils/warpcastChannels", (req: Request, res: Response) => {
+       return res.json({ channels: warpcastChannels });
+     });
+  process.on('SIGINT', () => {
+    posthog.flush();
+    process.exit();
+  });
   return app;
 };

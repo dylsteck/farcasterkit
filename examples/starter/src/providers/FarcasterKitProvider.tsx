@@ -1,35 +1,36 @@
+"use client";
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import axios from 'axios';
 
-interface FarcasterKitProviderProps {
+type FarcasterKitProviderProps =  {
   baseURL?: string;
   children: ReactNode;
 }
 
-interface FarcasterKitContextType {
+type FarcasterKitContextType =  {
   baseURL: string;
 }
 
-export interface LatestCastsParams {
+export type LatestCastsParams =  {
     fid?: number;
     parent_url?: string;
     cursor?: number;
     limit?: number;
 }
 
-export interface CastParams {
+export type CastParams = {
     hash?: string;
     cursor?: number;
     limit?: number;
 }
 
-export interface SearchCastParams{
+export type SearchCastParams = {
     query: string;
     cursor?: number;
     limit?: number;
 }
 
-export interface UserParams{
+export type UserParams = {
     fid?: number;
     fname?: string;
     cursor?: number;

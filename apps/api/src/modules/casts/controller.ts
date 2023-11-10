@@ -5,7 +5,7 @@ import { KyselyDB } from "types/database.t";
 
 const router = Router();
 
-router.get("/casts/latest", async(req, res) => {
+router.get("/latest", async(req, res) => {
   const { fid, parent_url, cursor, limit } = req.query;
   // todo(maybe): add fname support as well?
   const fidWhere = fid ? sql`WHERE casts.fid = ${fid}` : sql``;
@@ -42,7 +42,7 @@ router.get("/casts/latest", async(req, res) => {
   });
 });
 
-router.get("/casts/replies", async(req, res) => {
+router.get("/replies", async(req, res) => {
     const { parent_hash, cursor, limit } = req.query;
 
     const parentHashAsHex = Buffer.from(typeof parent_hash === 'string' ? parent_hash.substring(2) : '0x', 'hex').toString('hex');
@@ -75,7 +75,7 @@ router.get("/casts/replies", async(req, res) => {
     });
 });
 
-router.get("/casts/search", async(req, res) => {
+router.get("/search", async(req, res) => {
   const { query, cursor, limit } = req.query;
   const validLimit = limit && parseInt(limit as string) <=50 ? limit : `50`;
   const validCursor = cursor ? cursor : `0`;
@@ -106,7 +106,7 @@ router.get("/casts/search", async(req, res) => {
   });
 });
 
-router.get("/casts/:hash", async (req, res) => {
+router.get("/:hash", async (req, res) => {
   const { hash } = req.params;
 
   const hashAsHex = Buffer.from(hash.substring(2), 'hex').toString('hex');
