@@ -1,6 +1,6 @@
 {
     "name": "create-farcaster-app",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "scaffolds a default farcaster app",
     "bin": "cli.mjs",
     "type": "module",

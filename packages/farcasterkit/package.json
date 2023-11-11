@@ -1,6 +1,6 @@
 {
   "name": "farcasterkit",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "react hooks for the best farcaster apps",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -16,7 +16,8 @@
     "react",
     "rest-api",
     "reacthooks",
-    "farcaster"
+    "farcaster",
+    "farcaster kit"
   ],
   "author": "dylsteck",
   "license": "MIT",

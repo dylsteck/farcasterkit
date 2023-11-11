@@ -7,8 +7,27 @@ const router = Router();
 
 router.get("/user", async (req, res) => {
   const { fid, fname } = req.query;
-  const fidQuery = sql<KyselyDB['users']>`SELECT * from users where fid = CAST(${fid} AS bigint) LIMIT 1`;
-  const fnameQuery = sql<KyselyDB['users']>`SELECT * from users where fname = ${fname} LIMIT 1`;
+  const fidQuery = sql<KyselyDB['users']>`
+    SELECT 
+        *,
+        CONCAT('0x', encode(custody_address, 'hex')) as custody_address
+    FROM 
+        users 
+    WHERE 
+        fid = CAST(${fid} AS bigint) 
+    LIMIT 1;
+`;
+
+  const fnameQuery = sql<KyselyDB['users']>`
+      SELECT 
+          *,
+          CONCAT('0x', encode(custody_address, 'hex')) as custody_address
+      FROM 
+          users 
+      WHERE 
+          fname = ${fname} 
+      LIMIT 1;
+  `;
 
   const user = fid ? await fidQuery.execute(db) : await fnameQuery.execute(db);
   return res.json({

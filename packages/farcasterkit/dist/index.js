@@ -272,20 +272,24 @@ var useLatestCasts = function(queryParams) {
         throw new Error("useLatestCasts must be used within a FarcasterKitProvider");
     }
     var baseURL = context.baseURL;
-    var _ref = _sliced_to_array((0, import_react2.useState)(null), 2), data = _ref[0], setData = _ref[1];
+    var _ref = _sliced_to_array((0, import_react2.useState)([]), 2), data = _ref[0], setData = _ref[1];
     var _ref1 = _sliced_to_array((0, import_react2.useState)(true), 2), loading = _ref1[0], setLoading = _ref1[1];
     (0, import_react2.useEffect)(function() {
-        var getLatestCasts = function() {
+        var isMounted = true;
+        var fetchData = function() {
             var _ref = _async_to_generator(function() {
                 var response, responseData, error;
                 return _ts_generator(this, function(_state) {
                     switch(_state.label){
                         case 0:
+                            if (isMounted) setLoading(true);
+                            _state.label = 1;
+                        case 1:
                             _state.trys.push([
-                                0,
-                                2,
+                                1,
+                                3,
                                 ,
-                                3
+                                4
                             ]);
                             return [
                                 4,
@@ -293,39 +297,47 @@ var useLatestCasts = function(queryParams) {
                                     params: queryParams
                                 })
                             ];
-                        case 1:
+                        case 2:
                             response = _state.sent();
                             responseData = response.data;
-                            if (responseData && responseData.casts) {
-                                setData(responseData.casts);
+                            if (isMounted) {
+                                setData(responseData.casts || []);
                                 setLoading(false);
                             }
                             return [
                                 3,
-                                3
-                            ];
-                        case 2:
-                            error = _state.sent();
-                            console.error("Error fetching latest casts:", error);
-                            setLoading(false);
-                            return [
-                                3,
-                                3
+                                4
                             ];
                         case 3:
+                            error = _state.sent();
+                            if (isMounted) {
+                                console.error("Error fetching latest casts:", error);
+                                setLoading(false);
+                            }
+                            return [
+                                3,
+                                4
+                            ];
+                        case 4:
                             return [
                                 2
                             ];
                     }
                 });
             });
-            return function getLatestCasts() {
+            return function fetchData() {
                 return _ref.apply(this, arguments);
             };
         }();
-        getLatestCasts();
+        fetchData().catch(function(err) {
+            console.log("error", err);
+        });
+        return function() {
+            isMounted = false;
+        };
     }, [
-        baseURL
+        baseURL,
+        JSON.stringify(queryParams)
     ]);
     return {
         data: data,
@@ -347,7 +359,7 @@ var useCast = function(queryParams) {
     (0, import_react2.useEffect)(function() {
         var getCast = function() {
             var _ref = _async_to_generator(function() {
-                var response, responseData, error;
+                var _queryParams_hash, response, responseData, error;
                 return _ts_generator(this, function(_state) {
                     switch(_state.label){
                         case 0:
@@ -359,7 +371,7 @@ var useCast = function(queryParams) {
                             ]);
                             return [
                                 4,
-                                import_axios.default.get("".concat(baseURL, "/casts/").concat(queryParams === null || queryParams === void 0 ? void 0 : queryParams.hash), {
+                                import_axios.default.get("".concat(baseURL, "/casts/").concat((_queryParams_hash = queryParams === null || queryParams === void 0 ? void 0 : queryParams.hash) !== null && _queryParams_hash !== void 0 ? _queryParams_hash : ""), {
                                     params: params
                                 })
                             ];
@@ -393,7 +405,9 @@ var useCast = function(queryParams) {
                 return _ref.apply(this, arguments);
             };
         }();
-        getCast();
+        getCast().catch(function(err) {
+            console.log("err", err);
+        });
     }, [
         baseURL,
         queryParams === null || queryParams === void 0 ? void 0 : queryParams.hash
@@ -405,69 +419,76 @@ var useCast = function(queryParams) {
 };
 var useReplies = function(queryParams) {
     var context = (0, import_react2.useContext)(FarcasterKitContext);
-    var params = {
-        cursor: (queryParams === null || queryParams === void 0 ? void 0 : queryParams.cursor) || 0,
-        limit: (queryParams === null || queryParams === void 0 ? void 0 : queryParams.limit) || 100
-    };
     if (context === void 0) {
         throw new Error("useReplies must be used within a FarcasterKitProvider");
     }
     var baseURL = context.baseURL;
-    var _ref = _sliced_to_array((0, import_react2.useState)(null), 2), data = _ref[0], setData = _ref[1];
+    var _ref = _sliced_to_array((0, import_react2.useState)([]), 2), data = _ref[0], setData = _ref[1];
     var _ref1 = _sliced_to_array((0, import_react2.useState)(true), 2), loading = _ref1[0], setLoading = _ref1[1];
     (0, import_react2.useEffect)(function() {
-        var getReplies = function() {
+        var isMounted = true;
+        var fetchData = function() {
             var _ref = _async_to_generator(function() {
                 var _queryParams_hash, response, responseData, error;
                 return _ts_generator(this, function(_state) {
                     switch(_state.label){
                         case 0:
+                            if (isMounted) setLoading(true);
+                            _state.label = 1;
+                        case 1:
                             _state.trys.push([
-                                0,
-                                2,
+                                1,
+                                3,
                                 ,
-                                3
+                                4
                             ]);
                             return [
                                 4,
                                 import_axios.default.get("".concat(baseURL, "/casts/replies?parent_hash=").concat((_queryParams_hash = queryParams === null || queryParams === void 0 ? void 0 : queryParams.hash) !== null && _queryParams_hash !== void 0 ? _queryParams_hash : ""), {
-                                    params: params
+                                    params: queryParams
                                 })
                             ];
-                        case 1:
+                        case 2:
                             response = _state.sent();
                             responseData = response.data;
-                            if (responseData && responseData.cast) {
-                                setData(responseData.cast);
+                            if (isMounted) {
+                                setData(responseData.casts || []);
                                 setLoading(false);
                             }
                             return [
                                 3,
-                                3
-                            ];
-                        case 2:
-                            error = _state.sent();
-                            console.error("Error fetching replies:", error);
-                            setLoading(false);
-                            return [
-                                3,
-                                3
+                                4
                             ];
                         case 3:
+                            error = _state.sent();
+                            if (isMounted) {
+                                console.error("Error fetching cast replies:", error);
+                                setLoading(false);
+                            }
+                            return [
+                                3,
+                                4
+                            ];
+                        case 4:
                             return [
                                 2
                             ];
                     }
                 });
             });
-            return function getReplies() {
+            return function fetchData() {
                 return _ref.apply(this, arguments);
             };
         }();
-        getReplies();
+        fetchData().catch(function(err) {
+            console.log("error", err);
+        });
+        return function() {
+            isMounted = false;
+        };
     }, [
         baseURL,
-        queryParams === null || queryParams === void 0 ? void 0 : queryParams.hash
+        JSON.stringify(queryParams)
     ]);
     return {
         data: data,
@@ -476,69 +497,76 @@ var useReplies = function(queryParams) {
 };
 var useSearch = function(queryParams) {
     var context = (0, import_react2.useContext)(FarcasterKitContext);
-    var params = {
-        cursor: (queryParams === null || queryParams === void 0 ? void 0 : queryParams.cursor) || 0,
-        limit: (queryParams === null || queryParams === void 0 ? void 0 : queryParams.limit) || 100
-    };
     if (context === void 0) {
         throw new Error("useSearch must be used within a FarcasterKitProvider");
     }
     var baseURL = context.baseURL;
-    var _ref = _sliced_to_array((0, import_react2.useState)(null), 2), data = _ref[0], setData = _ref[1];
+    var _ref = _sliced_to_array((0, import_react2.useState)([]), 2), data = _ref[0], setData = _ref[1];
     var _ref1 = _sliced_to_array((0, import_react2.useState)(true), 2), loading = _ref1[0], setLoading = _ref1[1];
     (0, import_react2.useEffect)(function() {
-        var getSearch = function() {
+        var isMounted = true;
+        var fetchData = function() {
             var _ref = _async_to_generator(function() {
                 var response, responseData, error;
                 return _ts_generator(this, function(_state) {
                     switch(_state.label){
                         case 0:
+                            if (isMounted) setLoading(true);
+                            _state.label = 1;
+                        case 1:
                             _state.trys.push([
-                                0,
-                                2,
+                                1,
+                                3,
                                 ,
-                                3
+                                4
                             ]);
                             return [
                                 4,
-                                import_axios.default.get("".concat(baseURL, "/casts/search?query=").concat(queryParams === null || queryParams === void 0 ? void 0 : queryParams.query), {
-                                    params: params
+                                import_axios.default.get("".concat(baseURL, "/casts/search"), {
+                                    params: queryParams
                                 })
                             ];
-                        case 1:
+                        case 2:
                             response = _state.sent();
                             responseData = response.data;
-                            if (responseData && responseData.cast) {
-                                setData(responseData.cast);
+                            if (isMounted) {
+                                setData(responseData.casts || []);
                                 setLoading(false);
                             }
                             return [
                                 3,
-                                3
-                            ];
-                        case 2:
-                            error = _state.sent();
-                            console.error("Error fetching search results:", error);
-                            setLoading(false);
-                            return [
-                                3,
-                                3
+                                4
                             ];
                         case 3:
+                            error = _state.sent();
+                            if (isMounted) {
+                                console.error("Error fetching search request:", error);
+                                setLoading(false);
+                            }
+                            return [
+                                3,
+                                4
+                            ];
+                        case 4:
                             return [
                                 2
                             ];
                     }
                 });
             });
-            return function getSearch() {
+            return function fetchData() {
                 return _ref.apply(this, arguments);
             };
         }();
-        getSearch();
+        fetchData().catch(function(err) {
+            console.log("error", err);
+        });
+        return function() {
+            isMounted = false;
+        };
     }, [
         baseURL,
-        queryParams === null || queryParams === void 0 ? void 0 : queryParams.query
+        JSON.stringify(queryParams)
     ]);
     return {
         data: data,
@@ -551,7 +579,8 @@ var useUser = function(queryParams) {
         cursor: (queryParams === null || queryParams === void 0 ? void 0 : queryParams.cursor) || 0,
         limit: (queryParams === null || queryParams === void 0 ? void 0 : queryParams.limit) || 100
     };
-    var fidOrFname = (queryParams === null || queryParams === void 0 ? void 0 : queryParams.fid) ? "fid=".concat(queryParams === null || queryParams === void 0 ? void 0 : queryParams.fid) : "fname=".concat(queryParams === null || queryParams === void 0 ? void 0 : queryParams.fname);
+    var _queryParams_fname;
+    var fidOrFname = (queryParams === null || queryParams === void 0 ? void 0 : queryParams.fid) ? "fid=".concat(queryParams === null || queryParams === void 0 ? void 0 : queryParams.fid) : "fname=".concat((_queryParams_fname = queryParams === null || queryParams === void 0 ? void 0 : queryParams.fname) !== null && _queryParams_fname !== void 0 ? _queryParams_fname : "");
     if (context === void 0) {
         throw new Error("useSearch must be used within a FarcasterKitProvider");
     }
@@ -607,7 +636,9 @@ var useUser = function(queryParams) {
                 return _ref.apply(this, arguments);
             };
         }();
-        getUser();
+        getUser().catch(function(err) {
+            console.log("err", err);
+        });
     }, [
         baseURL,
         queryParams === null || queryParams === void 0 ? void 0 : queryParams.fid,
