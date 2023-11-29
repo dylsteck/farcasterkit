@@ -1,5 +1,7 @@
 import { usePrivy } from "@privy-io/react-auth";
 import { useEffect } from "react";
+import { useNetwork, useSwitchNetwork } from 'wagmi';
+import { optimism } from 'viem/chains';
 
 const LoginButton = ({ onClick }: { onClick: () => void }) => {
     return (
@@ -19,17 +21,18 @@ const LogoutButton = ({ onClick }: { onClick: () => void }) => {
 
 interface LoginProps {
     onComplete: () => void;
-  }
+}
   
-
 export default function Login({ onComplete }: LoginProps){
-    const { login, user, logout } = usePrivy()
-     
+    const { login, user, logout } = usePrivy();
+    const { chain } = useNetwork();
+    const { switchNetwork } = useSwitchNetwork();
+
     useEffect(() => {
         if(user){
             onComplete();
         }
-    }, [user]);
-    
-    return user ? <LogoutButton onClick={logout} /> : <LoginButton onClick={login} />
+    }, [user, chain, onComplete, switchNetwork]);
+
+    return user ? <LogoutButton onClick={logout} /> : <LoginButton onClick={login} />;
 }

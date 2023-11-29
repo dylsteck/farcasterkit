@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import { Inter } from 'next/font/google'
 import { useEffect } from 'react';
-import Cast from '@/components/Cast';
+// import Cast from '@/components/Cast';
 // import { channels, useLatestCasts } from 'farcasterkit';
 import Login from '@/components/Login';
 import Signup from '@/components/Signup';

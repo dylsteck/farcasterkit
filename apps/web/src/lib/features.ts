@@ -1,14 +1,14 @@
 export const features = [
-    'rest api', 
-    'read features',
-    'channels module', 
-    'app-first feeds', 
-    'historic data',
-    'user pages'
+    'REST API', 
+    'Read Features',
+    'Channels Module', 
+    'App-first Feeds', 
+    'Historic Data',
+    'User Pages'
 ];
 
 export const comingSoon = [
-    'auth hooks',
-    'write actions',
-    'multi package/provider support'
+    'Auth Hooks',
+    'Write Actions',
+    'Multi Package/Provider Support'
 ];

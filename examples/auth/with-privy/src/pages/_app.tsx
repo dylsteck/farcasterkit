@@ -29,6 +29,8 @@ export default function App({ Component, pageProps }: AppProps) {
             accentColor: '#8A63D2',
             logo: FARCASTER_KIT_LOGO,
           },
+          defaultChain: optimism,
+          supportedChains: [optimism]
         }}
       >
         <PrivyWagmiConnector wagmiChainsConfig={configureChainsConfig}>

@@ -65,7 +65,7 @@ export default function HooksDocs(){
                     <p>{`const {data, loading} = useSearch({query: 'farcaster'})`}</p>
                 </div>
             </Section>
-            <Section>
+            <div className="w-[100vw] p-6 pb-0">
                 <div className="pb-[2.5vh]">
                     <p className="text-lg font-medium">useUser</p>
                     <p className="pt-[1.5vh]">get profile data for a given a fid or fname</p>
@@ -79,7 +79,7 @@ export default function HooksDocs(){
                     <p className="pt-2">usage:</p>
                     <p>{`const {data, loading} = useUser({fname: 'dylsteck.eth'})`}</p>
                 </div>
-            </Section>
+            </div>
         </>
     )
 }

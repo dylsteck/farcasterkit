@@ -1,100 +1,59 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { usePrepareContractWrite, useContractWrite, useAccount, useWaitForTransaction, useSignTypedData, useNetwork } from 'wagmi';
-import { parseUnits, formatUnits, Contract } from 'ethers';
-import { useFarcasterKit } from "@/providers/FarcasterKitProvider";
+import { useAccount, useContractWrite, useWaitForTransaction, useContractRead } from 'wagmi';
+import { ethers, formatUnits, parseUnits } from 'ethers';
 import { BundlerABI } from '@/abi/BundlerABI';
 
-// Bundler contract call 
-const contractAddress = '0x00000000fc94856F3967b047325F88d47Bc225d0';
+const contractAddress = '0x00000000FC04c910A0b5feA33b03E0447AD0B0aA';
 
-interface CreateAccountProps {
-  onComplete: () => void;
-}
-
-const CreateAccount: React.FC<CreateAccountProps> = ({ onComplete }) => {
-  const { signer, recoveryAddress } = useFarcasterKit();
+const CreateAccount = ({ onComplete }: { onComplete: () => void }) => {
   const { address, isConnected } = useAccount();
-  const { chain } = useNetwork();
   const [storageUnits, setStorageUnits] = useState('0');
-  const [estimatedGas, setEstimatedGas] = useState('');
-  const [isInsufficientFunds, setIsInsufficientFunds] = useState(false);
   const [isWriteLoading, setIsWriteLoading] = useState(false);
-  const [signature, setSignature] = useState('');
 
-  // Setting deadline to one year from now
-  const deadline = Math.floor(Date.now() / 1000) + 365 * 24 * 60 * 60;
-
-  const { signTypedData } = useSignTypedData();
-
-  // Define the data structure to be signed as per your contract's requirements
-  const dataToSign = {
-    domain: {
-      name: 'YourContractName',
-      version: '1',
-      chainId: chain?.id,
-      verifyingContract: contractAddress,
-    },
-    types: {
-      Registration: [
-        { name: 'to', type: 'address' },
-        { name: 'recovery', type: 'address' },
-        { name: 'deadline', type: 'uint256' },
-      ],
-    },
-    value: {
-      to: address,
-      recovery: recoveryAddress,
-      deadline: deadline.toString(),
-    },
-  };
+  const { data: priceData } = useContractRead({
+    address: contractAddress,
+    abi: BundlerABI,
+    functionName: 'price',
+    args: [0],
+  });
 
   useEffect(() => {
-    if (isConnected && address) {
-      signTypedData({
-        domain: dataToSign.domain,
-        types: dataToSign.types,
-        value: dataToSign.value,
-      }).then((signature) => {
-        setSignature(signature);
-      }).catch(console.error);
+    if (priceData) {
+      setStorageUnits(formatUnits(priceData, 'ether'));
     }
-  }, [signTypedData, address, isConnected, dataToSign]);
+  }, [priceData]);
 
-  const prepareRegistration = useCallback(() => {
-    return {
-      to: address,
-      recovery: recoveryAddress,
-      deadline: deadline.toString(),
-      sig: signature
-    };
-  }, [address, recoveryAddress, deadline, signature]);
+  const prepareRegistrationParams = useCallback(() => {
+    const deadline = Math.floor(Date.now() / 1000) + 365 * 24 * 60 * 60;
+    return [
+      { to: address, recovery: address, deadline }, // Assuming recovery address is the same as the user's address
+      [], // Assuming no signerParams
+      parseUnits(storageUnits || '0', 'ether')
+    ];
+  }, [address, storageUnits]);
 
-  const contract = new Contract(contractAddress, BundlerABI);
-
-  const { config, error: prepareError } = usePrepareContractWrite({
+  const { write, error: writeError } = useContractWrite({
     address: contractAddress,
     abi: BundlerABI,
     functionName: 'register',
-    args: [prepareRegistration(), [signer], parseUnits(storageUnits, 'ether')],
+    args: prepareRegistrationParams(),
   });
 
-  const { write: registerWrite, data: txData } = useContractWrite(config);
-
-  useEffect(() => {
-    if (isConnected && address && contract.provider) {
-      contract.estimateGas.register(prepareRegistration(), [signer], parseUnits(storageUnits, 'ether'))
-        .then(estimatedGasLimit => {
-          return estimatedGasLimit.mul(contract.provider.getGasPrice());
-        })
-        .then(estimatedGasCost => {
-          setEstimatedGas(formatUnits(estimatedGasCost, 'ether'));
-        })
-        .catch(console.error);
+  const handleRegister = async () => {
+    if (!isConnected || !address) {
+      console.error("Wallet not connected");
+      return;
     }
-  }, [address, isConnected, contract, prepareRegistration, signer, storageUnits]);
+    setIsWriteLoading(true);
+    try {
+      await write();
+    } finally {
+      setIsWriteLoading(false);
+    }
+  };
 
   const { status: waitStatus } = useWaitForTransaction({
-    hash: txData?.hash,
+    hash: write?.data?.hash,
   });
 
   useEffect(() => {
@@ -103,30 +62,19 @@ const CreateAccount: React.FC<CreateAccountProps> = ({ onComplete }) => {
     }
   }, [waitStatus, onComplete]);
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    if (!isInsufficientFunds && registerWrite && signature) {
-      setIsWriteLoading(true);
-      registerWrite();
-    }
-  };
-
   return (
     <div>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={(e) => e.preventDefault()}>
         <input
           type="text"
           value={storageUnits}
           onChange={(e) => setStorageUnits(e.target.value)}
           placeholder="Storage Units"
         />
-        <button type="submit" disabled={isWriteLoading}>Register</button>
+        <button onClick={handleRegister} disabled={isWriteLoading}>Register</button>
       </form>
-
-      {prepareError && <p>Error: {prepareError.message}</p>}
-      {estimatedGas && <p>Estimated Gas: {estimatedGas} ETH</p>}
-      {isInsufficientFunds && <p style={{ color: 'red' }}>Insufficient Funds.</p>}
-      {waitStatus === 'success' && <p>Transaction Successful!</p>}
+      {writeError && <p>Error: {writeError.message}</p>}
+      <p>Transaction Status: {waitStatus}</p>
     </div>
   );
 };
