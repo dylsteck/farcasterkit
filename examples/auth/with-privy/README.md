@@ -20,5 +20,6 @@ Transaction Status: idle`
     - very close! just need to fix the error writing to the Bundler contract
 - [] Update the `FarcasterKitProvider` in the npm package with the changes in this repo, that way:
     - Devs can start using this right away!
+    - I can properly style it(styles are ready in Figma, I just wanted to focus on implementation first to get this right)s
     - I can add support for other auth providers as well(which should be super easy)
 - [] Add sign in support, but for connecting(traditional flow where you create a signer) and sign in(verifying a Farcaster user without a signer)
