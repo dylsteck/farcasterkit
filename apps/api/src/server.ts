@@ -6,8 +6,9 @@ import { CastsRouter } from "./modules/casts/controller";
 import { UsersRouter } from "./modules/users/controller";
 import { warpcastChannels } from "./utils/warpcastChannels";
 import { PostHog } from 'posthog-node';
+import { NeynarRouter } from "modules/neynar/controller";
 
-const posthog = new PostHog(`${process.env.POSTHOG_API_KEY ?? ''}`, { host: 'https://app.posthog.com' });
+const posthog = new PostHog(`${process.env.POSTHOG_API_KEY ?? ""}`, { host: 'https://app.posthog.com' });
 
 export const createServer = () => {
   const app = express();
@@ -36,6 +37,7 @@ export const createServer = () => {
   });
   app.use('/casts', CastsRouter)
      .use('/users', UsersRouter)
+     .use('/neynar', NeynarRouter)
      .get("/utils/warpcastChannels", (req: Request, res: Response) => {
        return res.json({ channels: warpcastChannels });
      });

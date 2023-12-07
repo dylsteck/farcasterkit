@@ -8,9 +8,12 @@ import { log } from "./log";
  * If you're running this from the examples directory, make sure you follow the
  * README.
  */
+// ff043d.hubs.neynar.com:2283
+// const HUB_HOST = process.env["HUB_HOST"] || "nemes.farcaster.xyz:2283";
 const HUB_HOST = process.env["HUB_HOST"] || "nemes.farcaster.xyz:2283";
 const HUB_SSL = (process.env["HUB_SSL"] || "true") === "true";
-const POSTGRES_URL = process.env["POSTGRES_URL"] || "postgres://app:password@localhost:6541/hub";
+// const POSTGRES_URL = process.env["POSTGRES_URL"] || "postgres://app:password@localhost:6541/hub";
+const POSTGRES_URL = process.env["POSTGRES_URL"] || "";
 
 const db = getDbClient(POSTGRES_URL);
 

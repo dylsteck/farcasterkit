@@ -19,7 +19,6 @@ const steps: Step[] = [
     { number: 2, name: 'Set recovery address' },
     { number: 3, name: 'Authorize app' },
     { number: 4, name: 'Create account' },
-    // TODO: Add create fname before Set profile info and after Create account
     { number: 5, name: 'Set profile info' },
 ];
 
