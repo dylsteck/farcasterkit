@@ -65,7 +65,7 @@ function Confirm({ onComplete }: SetRecoveryAddressProps) {
 
     return (
         <button 
-            className="pl-2 pb-2 font-medium text-white" 
+            className="pl-2 pb-2 font-medium text-black" 
             onClick={generateSignature}
         >
             Generate Signature
@@ -83,6 +83,7 @@ export default function SetRecoveryAddress({ authenticatedAddress, onComplete }:
 
     return (
         <div>
+            <p className="pl-2">Enter your recovery address below</p>
             <input
                 type="text"
                 value={recoveryAddress}

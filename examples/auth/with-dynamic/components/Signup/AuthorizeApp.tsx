@@ -77,12 +77,15 @@ export default function AuthorizeApp({ onComplete }: { onComplete: () => void })
   };
 
   return (
+    <>
+    <p>Clicking the button below wil authorize this app as a signer</p>
     <button
       disabled={!isConnected || isSigning}
       onClick={handleSign}
-      className="w-28 inline-flex justify-center items-center rounded-md bg-purple-600 px-3 py-2 text-sm font-semibold text-white hover:bg-purple-500"
+      className="mt-5 w-28 inline-flex justify-center items-center rounded-md bg-purple-600 px-3 py-2 text-sm font-semibold text-white hover:bg-purple-500"
     >
       Sign Message
     </button>
+    </>
   );
 }

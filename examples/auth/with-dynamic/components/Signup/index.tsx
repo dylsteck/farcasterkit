@@ -8,6 +8,7 @@ import SetRecoveryAddress from './SetRecoveryAddress';
 import AuthorizeApp from './AuthorizeApp';
 import CreateAccount from './CreateAccount';
 import CreateAccountBtn from './CreateAccountBtn';
+import { useSwitchNetwork } from 'wagmi'
 
 interface Step{
     number: number;
@@ -26,10 +27,15 @@ const steps: Step[] = [
 
 export default function Signup(){
     const { address, isConnecting, isConnected, isDisconnected } = useAccount()
+    const { chains, error, isLoading, pendingChainId, switchNetwork } = useSwitchNetwork()
+    
     const [step, setStep] = useState<Step>(steps[0]);
 
     const handleSetStep = (newStep: Step) => {
-        if(step.number !== newStep.number){
+        if(newStep.number === 2 && switchNetwork){
+           switchNetwork(10);
+        }
+        if(step.number !== newStep.number && !isLoading){
             setStep(newStep);
         }
     }

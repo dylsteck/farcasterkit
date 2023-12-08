@@ -31,6 +31,7 @@ export default function RootLayout({
             walletConnectors: [
               EthereumWalletConnectors,
             ],
+            evmNetworks
           }}
         >
           <DynamicWagmiConnector>
