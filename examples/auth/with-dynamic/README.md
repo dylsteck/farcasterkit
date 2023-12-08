@@ -11,7 +11,7 @@ Signup flow loosely based on [farcaster-signup-demo by @wojtekwtf](https://githu
     - The auth and two signatures(set recovery address and authorize app) work well, but when I try to call the Bundler I get this error:
         - `Error: Cannot read properties of undefined (reading 'length')
 Transaction Status: idle`
-    - The code for this step lives in [src/components/Signup/CreateAccount.tsx](https://github.com/dylsteck/farcasterkit/blob/auth/examples/auth/with-dynamic/src/components/Signup/CreateAccount.tsx)
+    - The code for this step lives in [src/components/Signup/CreateAccount.tsx](https://github.com/dylsteck/farcasterkit/blob/auth/examples/auth/with-dynamic/components/Signup/CreateAccount.tsx)
 - (not yet implemented), after signup, you'd set the user's fname and use their signer to post casts to the network
 
 
