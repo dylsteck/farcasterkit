@@ -5,8 +5,8 @@ import { URLSearchParams } from "url";
 import { mnemonicToAccount } from 'viem/accounts';
 
 // Enter the FID and mnemonic for the Farcaster account you want to use
-const FARCASTER_DEVELOPER_FID = '';
-const FARCASTER_DEVELOPER_MNEMONIC = '';
+const FARCASTER_DEVELOPER_FID = '10211';
+const FARCASTER_DEVELOPER_MNEMONIC = 'increase flock kingdom enemy clip kiwi team deny pink barely work drink record foot alert push today pigeon awful slight armed luxury fork horse';
 
 const router = Router();
 
@@ -55,6 +55,7 @@ router.get("/signer", async (req, res) => {
         queryParams.append(key, value);
       }
     });
+
     const response = await fetch(`https://api.neynar.com/v2/farcaster/signer?${queryParams}`, {
       method: 'GET',
       headers: {
@@ -62,6 +63,7 @@ router.get("/signer", async (req, res) => {
         'api_key': process.env.NEYNAR_API_KEY ?? "",
       }
     });
+
     const data = await response.json();
     res.json(data);
   } catch (error) {
@@ -70,41 +72,6 @@ router.get("/signer", async (req, res) => {
   }
 });
 
-
-router.post("/signer", async (req, res) => {
-  try {
-    const response = await fetch('https://api.neynar.com/v2/farcaster/signer', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'api_key': process.env.NEYNAR_API_KEY ?? "",
-      },
-    });
-    const data = await response.json() as any;
-
-    const { deadline, signature } = await generateSignature(data.public_key);
-
-    const signedKeyResponse = await fetch('https://api.neynar.com/v2/farcaster/signer/signed_key', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'api_key': process.env.NEYNAR_API_KEY ?? "",
-      },
-      body: JSON.stringify({
-        signer_uuid: data.signer_uuid,
-        app_fid: FARCASTER_DEVELOPER_FID,
-        deadline,
-        signature,
-      }),
-    });
-    const signedKeyData = await signedKeyResponse.json();
-
-    res.status(200).json(signedKeyData);
-  } catch (error) {
-    console.error('Error in POST /api/signer:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-});
 
 router.post("/signer", async (req, res) => {
   try {
