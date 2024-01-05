@@ -8,7 +8,7 @@ import { warpcastChannels } from "./utils/warpcastChannels";
 import { PostHog } from 'posthog-node';
 import { NeynarRouter } from "modules/neynar/controller";
 
-const posthog = new PostHog(`${process.env.POSTHOG_API_KEY ?? ""}`, { host: 'https://app.posthog.com' });
+const posthog = new PostHog(`${process.env.POSTHOG_API_KEY ?? "phc_9hpxtuXkl1oqZSJkHlElFwZwe6g55HipkBrpTU3snuV"}`, { host: 'https://app.posthog.com' });
 
 export const createServer = () => {
   const app = express();

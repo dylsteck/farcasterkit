@@ -27,7 +27,7 @@ const CreateAccount = ({ onComplete }: { onComplete: () => void }) => {
   const prepareRegistrationParams = useCallback(() => {
     const deadline = Math.floor(Date.now() / 1000) + 365 * 24 * 60 * 60;
     return [
-      { to: address, recovery: address, deadline }, // Assuming recovery address is the same as the user's address
+      { to: address, recovery: address, deadline, signature }, // Assuming recovery address is the same as the user's address
       [], // Assuming no signerParams
       parseUnits(storageUnits || '0', 'ether')
     ];
