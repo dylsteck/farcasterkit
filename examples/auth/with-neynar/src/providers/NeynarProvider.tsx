@@ -185,7 +185,7 @@ export const NeynarProvider: React.FC<{ children: ReactNode }> = ({ children }) 
 
   const fetchFeed = useCallback(async (filterType: 'parent_url' | 'global_trending', limit: number, parentUrl?: string) => {
     setFeedLoading(true);
-    const client = new NeynarAPIClient(process.env.NEYNAR_API_KEY ?? "");
+    const client = new NeynarAPIClient(process.env.NEYNAR_API_KEY as string);
     try {
       const result = await client.fetchFeed(FeedType.Filter, {
         filterType: filterType === 'parent_url' ? FilterType.ParentUrl : FilterType.GlobalTrending,

@@ -51,7 +51,7 @@ router.get("/signer", async (req, res) => {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                'api_key': process.env.NEYNAR_API_KEY ?? "",
+                'api_key': process.env.NEYNAR_API_KEY,
             }
         });
         const data = await response.json();
@@ -68,7 +68,7 @@ router.post("/signer", async (req, res) => {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'api_key': process.env.NEYNAR_API_KEY ?? "",
+                'api_key': process.env.NEYNAR_API_KEY,
             },
         });
         const data = await response.json();
@@ -77,7 +77,7 @@ router.post("/signer", async (req, res) => {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'api_key': process.env.NEYNAR_API_KEY ?? "",
+                'api_key': process.env.NEYNAR_API_KEY,
             },
             body: JSON.stringify({
                 signer_uuid: data.signer_uuid,

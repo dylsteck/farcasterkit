@@ -5,8 +5,8 @@ import { URLSearchParams } from "url";
 import { mnemonicToAccount } from 'viem/accounts';
 
 // Enter the FID and mnemonic for the Farcaster account you want to use
-const FARCASTER_DEVELOPER_FID = '10211';
-const FARCASTER_DEVELOPER_MNEMONIC = 'increase flock kingdom enemy clip kiwi team deny pink barely work drink record foot alert push today pigeon awful slight armed luxury fork horse';
+const FARCASTER_DEVELOPER_FID = '<Yout Farcaster developer FID';
+const FARCASTER_DEVELOPER_MNEMONIC = '<Your Farcaster developer mnemonic>';
 
 const router = Router();
 
@@ -60,7 +60,7 @@ router.get("/signer", async (req, res) => {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        'api_key': process.env.NEYNAR_API_KEY ?? "",
+        'api_key': process.env.NEYNAR_API_KEY as string,
       }
     });
 
@@ -79,7 +79,7 @@ router.post("/signer", async (req, res) => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'api_key': process.env.NEYNAR_API_KEY ?? "",
+        'api_key': process.env.NEYNAR_API_KEY as string,
       },
     });
     const data = await response.json() as any;
@@ -90,7 +90,7 @@ router.post("/signer", async (req, res) => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'api_key': process.env.NEYNAR_API_KEY ?? "",
+        'api_key': process.env.NEYNAR_API_KEY as string,
       },
       body: JSON.stringify({
         signer_uuid: data.signer_uuid,
@@ -112,31 +112,27 @@ router.post('/cast', async (req, res) => {
   try {
     const { signer_uuid, text, parent, channel_id } = req.body;
 
-    // Construct the request body for Neynar API
     const requestBody = {
       signer_uuid,
       text,
       parent,
-      channel_id, // Include other fields if required
+      channel_id
     };
 
-    // Send the request to the Neynar API
     const apiResponse = await fetch('https://api.neynar.com/v2/farcaster/cast', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'api_key': process.env.NEYNAR_API_KEY ?? "",
+        'api_key': process.env.NEYNAR_API_KEY as string
       },
       body: JSON.stringify(requestBody)
     });
 
     const apiResult = await apiResponse.json();
 
-    // Send the response back to the client
     if (apiResponse.ok) {
       res.status(200).json(apiResult);
     } else {
-      // Handle errors
       res.status(apiResponse.status).json(apiResult);
     }
   } catch (error) {

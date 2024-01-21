@@ -13,7 +13,7 @@ const controller_2 = require("./modules/users/controller");
 const warpcastChannels_1 = require("./utils/warpcastChannels");
 const posthog_node_1 = require("posthog-node");
 const controller_3 = require("modules/neynar/controller");
-const posthog = new posthog_node_1.PostHog(`${process.env.POSTHOG_API_KEY ?? ""}`, { host: 'https://app.posthog.com' });
+const posthog = new posthog_node_1.PostHog(process.env.POSTHOG_API_KEY, { host: 'https://app.posthog.com' });
 const createServer = () => {
     const app = (0, express_1.default)();
     app.disable("x-powered-by")

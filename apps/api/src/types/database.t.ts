@@ -112,4 +112,12 @@ export interface KyselyDB {
     url: string | null;
     fname: string | null;
   };
+  ens_leaderboard: {
+    rank: bigint;
+    eth_name: string;
+    display: string;
+    pfp: string;
+    fid: number;
+    follower_count: bigint;
+  }
 }

@@ -1,0 +1,12 @@
+{
+  "introduction": {
+    "title": "Introduction"
+  },
+  "getting-started": "Getting Started",
+  "components": "Components",
+  "hooks": "Hooks",
+  "providers": "Providers",
+  "api-reference": "API Reference",
+  "examples": "Examples",
+  "faq": "FAQ"
+}

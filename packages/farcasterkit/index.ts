@@ -1,2 +1,2 @@
-export * from './FarcasterKitProvider';
-export * from './channels';
+export * from './modules';
+export * from './providers';

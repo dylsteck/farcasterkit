@@ -9,7 +9,7 @@ const pg_pool_1 = __importDefault(require("pg-pool"));
 exports.db = new kysely_1.Kysely({
     dialect: new kysely_1.PostgresDialect({
         pool: new pg_pool_1.default({
-            connectionString: process.env.PG_CONNECTION_STRING ?? "",
+            connectionString: process.env.PG_CONNECTION_STRING
         }),
     }),
 });

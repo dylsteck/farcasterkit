@@ -8,8 +8,9 @@ const express_1 = require("express");
 const node_fetch_1 = __importDefault(require("node-fetch"));
 const url_1 = require("url");
 const accounts_1 = require("viem/accounts");
-const FARCASTER_DEVELOPER_FID = '';
-const FARCASTER_DEVELOPER_MNEMONIC = '';
+// Enter the FID and mnemonic for the Farcaster account you want to use
+const FARCASTER_DEVELOPER_FID = '<Yout Farcaster developer FID';
+const FARCASTER_DEVELOPER_MNEMONIC = '<Your Farcaster developer mnemonic>';
 const router = (0, express_1.Router)();
 async function generateSignature(publicKey) {
     const SIGNED_KEY_REQUEST_VALIDATOR_EIP_712_DOMAIN = {
@@ -51,7 +52,7 @@ router.get("/signer", async (req, res) => {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                'api_key': process.env.NEYNAR_API_KEY ?? "",
+                'api_key': process.env.NEYNAR_API_KEY,
             }
         });
         const data = await response.json();
@@ -68,7 +69,7 @@ router.post("/signer", async (req, res) => {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'api_key': process.env.NEYNAR_API_KEY ?? "",
+                'api_key': process.env.NEYNAR_API_KEY,
             },
         });
         const data = await response.json();
@@ -77,7 +78,7 @@ router.post("/signer", async (req, res) => {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'api_key': process.env.NEYNAR_API_KEY ?? "",
+                'api_key': process.env.NEYNAR_API_KEY,
             },
             body: JSON.stringify({
                 signer_uuid: data.signer_uuid,
@@ -95,27 +96,33 @@ router.post("/signer", async (req, res) => {
     }
 });
 router.post('/cast', async (req, res) => {
-    if (req.method !== 'POST') {
-        return res.status(405).send({ error: 'Method Not Allowed' });
-    }
     try {
-        const response = await (0, node_fetch_1.default)('https://api.neynar.com/v2/farcaster/cast', {
+        const { signer_uuid, text, parent, channel_id } = req.body;
+        const requestBody = {
+            signer_uuid,
+            text,
+            parent,
+            channel_id
+        };
+        const apiResponse = await (0, node_fetch_1.default)('https://api.neynar.com/v2/farcaster/cast', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'api_key': process.env.NEYNAR_API_KEY ?? "",
+                'api_key': process.env.NEYNAR_API_KEY
             },
-            body: JSON.stringify(req.body),
+            body: JSON.stringify(requestBody)
         });
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+        const apiResult = await apiResponse.json();
+        if (apiResponse.ok) {
+            res.status(200).json(apiResult);
         }
-        const data = await response.json();
-        res.json(data);
+        else {
+            res.status(apiResponse.status).json(apiResult);
+        }
     }
     catch (error) {
-        console.error(error);
-        res.status(500).send({ error: 'Internal Server Error' });
+        console.error('Error in /cast route:', error);
+        res.status(500).send('Internal Server Error');
     }
 });
 exports.NeynarRouter = router;

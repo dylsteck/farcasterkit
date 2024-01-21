@@ -26,9 +26,11 @@
   },
   "homepage": "https://github.com/dylsteck/farcasterkit#readme",
   "dependencies": {
+    "@neynar/nodejs-sdk": "^1.5.0",
+    "@react-native-async-storage/async-storage": "^1.21.0",
     "@types/react": "^18.2.35",
     "@types/react-dom": "^18.2.14",
-    "axios": "^1.6.0",
+    "axios": "^1.6.5",
     "react": "^18.2.0",
     "tsup": "^7.2.0",
     "typescript": "^5.2.2"

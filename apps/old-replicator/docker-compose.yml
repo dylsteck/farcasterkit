@@ -14,7 +14,7 @@ services:
     init: true
     environment:
       - NODE_OPTIONS=--max-old-space-size=400 # Limit memory usage
-      - POSTGRES_URL=
+      - POSTGRES_URL=postgres://app:password@localhost:6541/hub
     volumes:
       - .:/home/node/app
       - app_node_modules:/home/node/app/node_modules

@@ -1,5 +1,5 @@
 // source: https://github.com/neynarxyz/farcaster-channels/blob/main/warpcast.json
-
+// TODO: update to show new channels(is there a way to get all new Warpcast channels for free/permissionlessly?)
 export const warpcastChannels = [
     {
         "name": "Neynar",

@@ -1,7 +1,8 @@
 "use strict";
-// source: https://github.com/neynarxyz/farcaster-channels/blob/main/warpcast.json
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.warpcastChannels = void 0;
+// source: https://github.com/neynarxyz/farcaster-channels/blob/main/warpcast.json
+// TODO: update to show new channels(is there a way to get all new Warpcast channels for free/permissionlessly?)
 exports.warpcastChannels = [
     {
         "name": "Neynar",
