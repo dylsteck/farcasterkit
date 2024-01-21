@@ -30,7 +30,7 @@ export const features = [
   {
     name: 'Auth',
     description:
-      "Our robust auth components offer options across platforms such as Privy, Dynamic, RainbowKit, and Farcaster's ConnectKit",
+      "Our robust auth components offer options across platforms such as Privy, Dynamic, RainbowKit, and Farcaster's AuthKit",
     icon: <ServerIcon className="stroke-black dark:stroke-white" />
   }
 ];

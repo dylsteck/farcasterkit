@@ -1,8 +1,32 @@
 # farcaster kit
 
-![farcaster kit og:image](https://i.imgur.com/qajaZLU.png)
-
 react hooks for the best farcaster apps -- [view docs](https://farcasterkit.com/docs)
+
+### todos for the `auth` branch
+note: right now the `auth` branch has housed all my latest changes, which have mostly been around auth. listed below is everthing i'm trying to finish before cleaing the branch up and merging it in <br/> ^ this really should be v1.0, but I'll worry about the versioning once everything is done
+- **auth**
+  - [ ] wrap up `examples/auth/with-neynar` and move the `NeynarProvider` as well as components directly to Farcaster Kit's package in `packages/farcasterkit`
+  - [ ] also in `examples/auth` - wrap up either `with-dynamic`, `with-privy`, or `with-rainbowkit`
+    - each lets the user _create a FC account with a wallet_, the component/providers just need to be cleaned then added to `packages/farcasterkit` before the wallet-specific examples can get edited
+  - [ ] create a subsequent component/edit the `FarcasterKitProvider` in `packages/farcasterkit` to allow a user to log in & _create a signer_ with their wallet
+  - [ ] wrap up `examples/auth/with-auth-kit` and add the component/provider edits to `packages/farcasterkit`
+- **api**
+    - [ ] add writes
+    - [ ] add read endpoints & schema that are similar or at parity to the old Warpcast APIs
+        - some of this will require writing materialized views over the `old-replicator`
+    - [ ] add new channels
+        - need to figure out the best way to get the channel data that isn't permissionless and only lives in Warpcast
+- **misc.**
+    - [ ] finish the new website at `apps/web`
+        - the new design is there, i've just been waiting to finish these changes so i can document them on the site
+    - [ ] write & add styled components to storybook in `packages/components`
+    - [ ] potentially make some edits to `examples/starter` to showcase more of what the new changes do?
+    - [ ] edit `packages/create-farcaster-app` to allow the user to select [litecast](https://github.com/dylsteck/litecast)
+    - [ ] add linting, changelog, and other small setup configs to the monorepo
+
+
+----
+![farcaster kit og:image](https://i.imgur.com/qajaZLU.png)
 
 farcaster kit is made up of two parts:
 1. react hooks and modules to build the best farcaster apps

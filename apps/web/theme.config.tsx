@@ -24,7 +24,7 @@ const config: DocsThemeConfig = {
   },
   logo: (
     <div className="flex items-center">
-      <FarcasterKitLogo height={30} width={30} />
+      <FarcasterKitLogo height={50} width={50} />
       <b className="ml-2 hidden text-sm font-semibold sm:block sm:text-base">
         Farcaster Kit
       </b>
