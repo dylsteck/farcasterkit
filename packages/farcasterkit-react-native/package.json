@@ -1,6 +1,6 @@
 {
   "name": "farcasterkit-react-native",
-  "version": "0.0.17",
+  "version": "0.0.18",
   "description": "the react native version of farcaster kit",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -15,10 +15,10 @@
   "keywords": [
     "react",
     "react native",
-    "rest-api",
     "reacthooks",
     "farcaster",
-    "farcaster kit"
+    "farcaster kit",
+    "neynar"
   ],
   "author": "dylsteck",
   "license": "MIT",
@@ -27,11 +27,9 @@
   },
   "homepage": "https://github.com/dylsteck/farcasterkit#readme",
   "dependencies": {
-    "@neynar/nodejs-sdk": "^1.5.0",
     "@react-native-async-storage/async-storage": "^1.21.0",
     "@types/react": "^18.2.35",
     "@types/react-dom": "^18.2.14",
-    "axios": "^1.6.5",
     "react": "^18.2.0",
     "swr": "^2.2.4",
     "tsup": "^7.2.0",

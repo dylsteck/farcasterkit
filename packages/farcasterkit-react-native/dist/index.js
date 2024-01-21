@@ -260,76 +260,6 @@ var NeynarProvider = function(param) {
     var API_KEY = apiKey;
     var API_URL = fcKitApiUrl ? fcKitApiUrl : "https://api.farcasterkit.com";
     var _ref = _sliced_to_array((0, import_react.useState)(null), 2), farcasterUser = _ref[0], setFarcasterUser = _ref[1];
-    var _ref1 = _sliced_to_array((0, import_react.useState)(false), 2), loading = _ref1[0], setLoading = _ref1[1];
-    var handleSignIn = function() {
-        var _ref = _async_to_generator(function() {
-            var response, data, error;
-            return _ts_generator(this, function(_state) {
-                switch(_state.label){
-                    case 0:
-                        setLoading(true);
-                        _state.label = 1;
-                    case 1:
-                        _state.trys.push([
-                            1,
-                            6,
-                            ,
-                            7
-                        ]);
-                        return [
-                            4,
-                            fetch("".concat(API_URL, "/neynar/signer"), {
-                                headers: {
-                                    "Content-Type": "application/json",
-                                    "api_key": API_KEY
-                                },
-                                method: "POST"
-                            })
-                        ];
-                    case 2:
-                        response = _state.sent();
-                        return [
-                            4,
-                            response.json()
-                        ];
-                    case 3:
-                        data = _state.sent();
-                        if (!(response.status === 200)) return [
-                            3,
-                            5
-                        ];
-                        return [
-                            4,
-                            import_async_storage.default.setItem("FARCASTER_USER", JSON.stringify(data))
-                        ];
-                    case 4:
-                        _state.sent();
-                        setFarcasterUser(data);
-                        _state.label = 5;
-                    case 5:
-                        return [
-                            3,
-                            7
-                        ];
-                    case 6:
-                        error = _state.sent();
-                        console.error("API Call failed", error);
-                        return [
-                            3,
-                            7
-                        ];
-                    case 7:
-                        setLoading(false);
-                        return [
-                            2
-                        ];
-                }
-            });
-        });
-        return function handleSignIn() {
-            return _ref.apply(this, arguments);
-        };
-    }();
     (0, import_react.useEffect)(function() {
         var fetchData = function() {
             var _ref = _async_to_generator(function() {
@@ -359,75 +289,6 @@ var NeynarProvider = function(param) {
         }();
         fetchData();
     }, []);
-    (0, import_react.useEffect)(function() {
-        if (farcasterUser && farcasterUser.status === "pending_approval") {
-            var intervalId = setInterval(/*#__PURE__*/ _async_to_generator(function() {
-                var response, updatedUser, error;
-                return _ts_generator(this, function(_state) {
-                    switch(_state.label){
-                        case 0:
-                            _state.trys.push([
-                                0,
-                                5,
-                                ,
-                                6
-                            ]);
-                            return [
-                                4,
-                                fetch("".concat(API_URL, "/neynar/signer?signer_uuid=").concat(farcasterUser.signer_uuid), {
-                                    headers: {
-                                        "api_key": API_KEY
-                                    },
-                                    method: "GET"
-                                })
-                            ];
-                        case 1:
-                            response = _state.sent();
-                            return [
-                                4,
-                                response.json()
-                            ];
-                        case 2:
-                            updatedUser = _state.sent();
-                            if (!((updatedUser === null || updatedUser === void 0 ? void 0 : updatedUser.status) === "approved")) return [
-                                3,
-                                4
-                            ];
-                            return [
-                                4,
-                                import_async_storage.default.setItem("FARCASTER_USER", JSON.stringify(updatedUser))
-                            ];
-                        case 3:
-                            _state.sent();
-                            setFarcasterUser(updatedUser);
-                            clearInterval(intervalId);
-                            _state.label = 4;
-                        case 4:
-                            return [
-                                3,
-                                6
-                            ];
-                        case 5:
-                            error = _state.sent();
-                            console.error("Error during polling", error);
-                            return [
-                                3,
-                                6
-                            ];
-                        case 6:
-                            return [
-                                2
-                            ];
-                    }
-                });
-            }), 2e3);
-            return function() {
-                return clearInterval(intervalId);
-            };
-        }
-    }, [
-        farcasterUser
-    ]);
     var postReaction = function() {
         var _ref = _async_to_generator(function(type, hash) {
             var error;
@@ -482,8 +343,6 @@ var NeynarProvider = function(param) {
     return /* @__PURE__ */ import_react.default.createElement(NeynarContext.Provider, {
         value: {
             farcasterUser: farcasterUser,
-            handleSignIn: handleSignIn,
-            loading: loading,
             setFarcasterUser: setFarcasterUser,
             postReaction: postReaction,
             apiKey: apiKey,
