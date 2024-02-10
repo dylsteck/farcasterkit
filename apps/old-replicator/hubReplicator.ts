@@ -57,7 +57,7 @@ type StoreMessageOperation = "merge" | "delete" | "prune" | "revoke";
 
 // If you're hitting out-of-memory errors, try decreasing this to reduce overall
 // memory usage.
-const MAX_PAGE_SIZE = 3_000;
+const MAX_PAGE_SIZE = 1000;
 
 // Max FIDs to fetch in parallel
 const MAX_JOB_CONCURRENCY = Number(process.env["MAX_CONCURRENCY"]) || os.cpus().length;

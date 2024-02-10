@@ -1,0 +1,141 @@
+import { WindowResizer, TVComponent } from '@components';
+import Image from 'next/image';
+
+# Introduction
+
+{/* <Image
+  alt="tailwind-variants banner"
+  priority
+  quality={90}
+  className="mt-1 rounded-lg"
+  height="730"
+  src="/banner.png"
+  width="1460"
+/> */}
+
+**Farcaster Kit** is a set of React hooks, components, and a free API to build the best [Farcaster](https://farcaster.xyz) apps.
+
+Building a Farcaster app can be difficult and require using multiple services. You might be running your own hub, wanting to fetch live data for your app, or authenticating users. All of these actions require multiple steps from multiple providers and aren't always the easiest for developers to manage.
+
+Farcaster Kit aims to unify the tools needed to make the best Farcaster apps in a few key ways:
+- **Free & robust API**: You can use our free read/write API to build out yoru entire Farcaster app
+- **Components & hooks**: Farcaster Kit comes out-of-the-box with all the React components and hooks your app needs
+- **Multi-provider**: Farcaster Kit is flexible to your setup -- easily switch out auth services & data providers(such as [Neynar](https://neynar.com)), or even customize our components
+- **Auth**: Our robust auth components offer options across platforms such as [Privy](https://privy.io), [Dynamic](https://dynamic.xyz), [RainbowKit](https://rainbowkit.xyz), and [Farcaster's AuthKit](https://docs.farcaster.xyz/auth-kit/introduction)
+
+## What is Farcaster?
+
+![farcaster.xyz website](https://blog.thirdweb.com/content/images/size/w1000/2023/10/What-is-Farcaster_-A-Beginner-s-Guide---5-Minute-Explainer.png)
+
+[Farcaster](https://farcaster.xyz) is a [sufficiently decentralized](https://www.varunsrinivasan.com/2022/01/11/sufficient-decentralization-for-social-networks) social network built on Ethereum.
+The protocol has many apps built on top of it -- primarily social media apps, but also other apps that leverage Farcaster's social graph.
+Some examples of clients and ecosystem apps include:
+- [Warpcast](https://warpcast.com)
+- [Opencast](https://opencast.stephancill.co.za)
+- [Flink](https://flink.fyi)
+- [Farcord](https://farcord.com)
+- [Tiles](https://tiles.cool)
+- [Aburra](https://aburra.xyz)
+- [Yup](https://yup.io)
+- [Bountycaster](https://bountycaster.xyz)
+- [Launchcaster](https://launchcaster.xyz)
+- [Paragraph](https://paragraph.xyz)
+- [Searchcaster](https://searchcaster.xyz)
+
+_To see a complete list of Farcaster ecosystem apps, check out [a16z's awesome-farcaster repo on GitHub](https://github.com/a16z/awesome-farcaster)_
+
+## Key features
+
+#### Components
+
+Whether you're trying to authenticate users, show a feed, or post a cast to the network, Farcaster Kit has a component to fit your need.
+
+<br />
+
+```js copy
+import { Cast } from 'farcasterkit';
+
+export default function CastPage({ hash }: { hash: string }){
+  return(
+    <div>
+      <Cast hash={hash} />
+    </div>
+  )
+}
+```
+
+To learn more about components, check the [components](/docs/components) page.
+
+#### Hooks
+
+**Hooks** allow you to access read & write requests easily within your app. This might be a better option if you'd rather create your own components than use ours.
+
+```js copy
+import { useCast } from 'farcasterkit';
+
+export default function CastPage({ hash }: { hash: string }){
+  const { cast } = useCast({ hash: hash });
+  return(
+    <div>
+      <p>{cast.text}</p>
+      <p>{cast.timestamp}</p>
+    </div>
+  )
+}
+```
+
+To learn more about hooks, check the [hooks](/docs/hooks) page.
+
+#### Providers
+
+**Providers** are needed in the root of your React app(typically your `_app.js/tsx`) to ensure your components can use context and hooks.
+Farcaster Kit offers providers both for Farcaster Kit's own data, as well as [Neynar's](https://neynar.com).
+
+```js copy
+import { FarcasterKitProvider, NeynarProvider } from 'farcasterkit';
+
+export default function App(props){
+  return(
+    <>
+      <FarcasterKitProvider>
+        <NeynarProvider>
+          {props.children}
+        </NeynarProvider>
+      </FarcasterKitProvider>
+    </>
+  )
+}
+```
+
+#### API
+
+Our **API** offers read and write access to the network.
+
+```js copy
+import React, {useEffect} from 'react'
+import axios from 'axios'
+
+export default function App(props){
+
+  useEffect(() => {
+    async function getData(){
+      const data = await axios.get('https://api.farcasterkit.com/casts')
+    }
+  }, [])
+
+
+  return(
+    <div>
+    </div>
+  )
+}
+```
+
+To learn more about the API, check the [API reference](/docs/api-reference) page.
+
+## Community
+
+We can't wait to see what you build with Farcaster Kit! Be sure to keep up with the project's latest on social media, and feel free to reach out if you have any feature ideas, bugs, or want to get involved!
+
+- [Farcaster](https://warpcast.com/farcasterkit)
+- [GitHub](https://github.com/dylsteck/farcasterkit)

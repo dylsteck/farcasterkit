@@ -13,39 +13,16 @@ services:
     command: ["sh", "-c", "yarn install && exec yarn start"]
     init: true
     environment:
-      - NODE_OPTIONS=--max-old-space-size=512 # Limit memory usage
-      - POSTGRES_URL=postgres://app:password@postgres:5432/hub
+      - NODE_OPTIONS=--max-old-space-size=400 # Limit memory usage
+      - POSTGRES_URL=postgres://app:password@localhost:6541/hub
     volumes:
       - .:/home/node/app
       - app_node_modules:/home/node/app/node_modules
     working_dir: /home/node/app
-    depends_on:
-      - postgres
-    networks:
-      - my_network
-
-  postgres:
-    image: 'postgres:15-alpine'
-    restart: unless-stopped
-    ports:
-      - '6541:5432' # Use a port unlikely to be in use so the example "Just Works"
-    environment:
-      - POSTGRES_DB=hub
-      - POSTGRES_USER=app
-      - POSTGRES_PASSWORD=password
-    volumes:
-      - pgdata:/var/lib/postgresql/data
-    healthcheck:
-      # Need to specify name/user to avoid `FATAL: role "root" does not exist` errors in logs
-      test: ['CMD-SHELL', 'env', 'pg_isready', '--dbname', '$$POSTGRES_DB', '-U', '$$POSTGRES_USER']
-      interval: 10s
-      timeout: 10s
-      retries: 3
     networks:
       - my_network
 
 volumes:
-  pgdata:
   app_node_modules:
 
 networks:

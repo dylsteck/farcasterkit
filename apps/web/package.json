@@ -1,28 +1,78 @@
 {
   "name": "web",
-  "version": "0.1.0",
   "private": true,
+  "license": "MIT",
+  "version": "0.0.1",
+  "description": "Farcaster Kit's website and docs",
+  "author": "@dylsteck",
+  "homepage": "https://github.com/dylsteck/farcasterkit-docs#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dylsteck/farcasterkit-docs.git"
+  },
+  "bugs": {
+    "url": "https://github.com/dylsteck/farcasterkit-docs/issues"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "lint:fix": "next lint --fix",
+    "fmt": "prettier --write .",
+    "fmt:check": "prettier --write ."
   },
   "dependencies": {
-    "@heroicons/react": "^2.0.18",
-    "next": "14.0.0",
-    "react": "^18",
-    "react-dom": "^18"
+    "@react-aria/interactions": "3.17.0",
+    "@react-aria/radio": "3.7.0",
+    "@react-aria/ssr": "3.7.1",
+    "@react-aria/tooltip": "3.6.1",
+    "@react-aria/utils": "3.19.0",
+    "@react-stately/radio": "3.8.3",
+    "@react-stately/tooltip": "3.4.3",
+    "@vercel/analytics": "1.0.2",
+    "classnames": "2.3.2",
+    "clsx": "2.0.0",
+    "farcasterkit": "1.0.1",
+    "framer-motion": "10.16.2",
+    "next": "13.4.19",
+    "nextra": "2.12.3",
+    "nextra-theme-docs": "2.12.3",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "sharp": "0.32.5",
+    "tailwind-variants": "^0.1.18"
   },
   "devDependencies": {
-    "@types/node": "20.8.9",
-    "@types/react": "18.2.33",
-    "@types/react-dom": "^18",
-    "autoprefixer": "^10",
-    "eslint": "^8",
+    "@types/node": "20.5.8",
+    "@types/react": "18.2.21",
+    "@types/react-dom": "18.2.7",
+    "@typescript-eslint/eslint-plugin": "6.5.0",
+    "autoprefixer": "10.4.15",
+    "eslint": "8.48.0",
     "eslint-config-next": "14.0.0",
-    "postcss": "^8",
-    "tailwindcss": "^3",
+    "eslint-config-prettier": "9.0.0",
+    "eslint-plugin-import": "2.28.1",
+    "eslint-plugin-jsx-a11y": "6.7.1",
+    "eslint-plugin-prettier": "5.0.0",
+    "eslint-plugin-react": "7.33.2",
+    "eslint-plugin-sort-destructure-keys": "1.5.0",
+    "eslint-plugin-sort-keys-fix": "1.1.2",
+    "eslint-plugin-unused-imports": "3.0.0",
+    "postcss": "8.4.29",
+    "prettier": "3.0.3",
+    "prettier-plugin-tailwindcss": "0.5.4",
+    "tailwindcss": "3.3.3",
     "typescript": "5.2.2"
+  },
+  "engines": {
+    "node": ">=16.x",
+    "pnpm": ">=8.x"
+  },
+  "packageManager": "pnpm@8.7.1",
+  "pnpm": {
+    "overrides": {
+      "flexsearch": "0.7.31"
+    }
   }
 }

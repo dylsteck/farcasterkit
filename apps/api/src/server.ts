@@ -4,10 +4,12 @@ import cors from "cors";
 import { json, urlencoded } from "body-parser";
 import { CastsRouter } from "./modules/casts/controller";
 import { UsersRouter } from "./modules/users/controller";
-import { warpcastChannels } from "./utils/warpcastChannels";
 import { PostHog } from 'posthog-node';
+import { NeynarRouter } from "modules/neynar/controller";
+import { ChannelsRouter } from "modules/channels/controller";
 
-const posthog = new PostHog(`${process.env.POSTHOG_API_KEY ?? ''}`, { host: 'https://app.posthog.com' });
+// TODO: Posthog key isn't reading from  `process.env.POSTHOG_API_KEY as string`
+const posthog = new PostHog(process.env.POSTHOG_API_KEY as string, { host: 'https://app.posthog.com' });
 
 export const createServer = () => {
   const app = express();
@@ -35,10 +37,9 @@ export const createServer = () => {
     next();
   });
   app.use('/casts', CastsRouter)
+     .use('/channels', ChannelsRouter)
+     .use('/neynar', NeynarRouter)
      .use('/users', UsersRouter)
-     .get("/utils/warpcastChannels", (req: Request, res: Response) => {
-       return res.json({ channels: warpcastChannels });
-     });
   process.on('SIGINT', () => {
     posthog.flush();
     process.exit();
