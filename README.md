@@ -1,4 +1,4 @@
-# TSDX React User Guide
+# TSDX React w/ Storybook User Guide
 
 Congrats! You just saved yourself hours of work by bootstrapping this project with TSDX. Let’s get you oriented with what’s here and how to use it.
 
@@ -17,6 +17,22 @@ npm start # or yarn start
 ```
 
 This builds to `/dist` and runs the project in watch mode so any edits you save inside `src` causes a rebuild to `/dist`.
+
+Then run either Storybook or the example playground:
+
+### Storybook
+
+Run inside another terminal:
+
+```bash
+yarn storybook
+```
+
+This loads the stories from `./stories`.
+
+> NOTE: Stories should reference the components as if using the library, similar to the example playground. This means importing from the root project directory. This has been aliased in the tsconfig and the storybook webpack config as a helper.
+
+### Example
 
 Then run the example inside another:
 
@@ -58,6 +74,11 @@ This is the folder structure we set up for you:
   index.tsx       # EDIT THIS
 /test
   blah.test.tsx   # EDIT THIS
+/stories
+  Thing.stories.tsx # EDIT THIS
+/.storybook
+  main.js
+  preview.js
 .gitignore
 package.json
 README.md         # EDIT THIS
@@ -83,7 +104,7 @@ TSDX uses [Rollup](https://rollupjs.org) as a bundler and generates multiple rol
 Two actions are added by default:
 
 - `main` which installs deps w/ cache, lints, tests, and builds on all pushes against a Node and OS matrix
-- `size` which comments cost comparison of your library on every pull request using [`size-limit`](https://github.com/ai/size-limit)
+- `size` which comments cost comparison of your library on every pull request using [size-limit](https://github.com/ai/size-limit)
 
 ## Optimizations
 
