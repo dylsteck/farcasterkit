@@ -35,16 +35,16 @@
     "singleQuote": true,
     "trailingComma": "es5"
   },
-  "name": "expocaster",
+  "name": "farcaster-kit",
   "author": "Nazeeh Vahora",
-  "module": "dist/expocaster.esm.js",
+  "module": "dist/farcaster-kit.esm.js",
   "size-limit": [
     {
-      "path": "dist/expocaster.cjs.production.min.js",
+      "path": "dist/farcaster-kit.cjs.production.min.js",
       "limit": "10 KB"
     },
     {
-      "path": "dist/expocaster.esm.js",
+      "path": "dist/farcaster-kit.esm.js",
       "limit": "10 KB"
     }
   ],
