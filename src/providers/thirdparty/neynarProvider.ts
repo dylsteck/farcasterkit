@@ -1,5 +1,3 @@
-import { NeynarAPIClient } from "@neynar/nodejs-sdk";
-
 import { ThirdParty } from "../class";
 
 /*
@@ -20,9 +18,5 @@ export class NeynarProvider extends ThirdParty {
         } else {
             super("neynar", apiKey, "https://api.neynar.com/v2/farcaster");
         }
-    }
-
-    client() {
-        return new NeynarAPIClient(this.apiKey);
     }
 }
