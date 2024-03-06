@@ -6,6 +6,12 @@ export type FarcasterUser = {
     fid?: number;
 }
 
+export type ConnectedAddresses = {
+    all: string[],
+    ethereum: string[],
+    solana: string[]
+}
+
 export type Channel = {
     name: string;
     parent_url: string;
@@ -13,7 +19,3 @@ export type Channel = {
     channel_id: string;
     lead_fid?: number;
 }
-
-
-  
-// Path: types/types.d.ts
