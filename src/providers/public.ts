@@ -18,7 +18,7 @@ export class PublicProvider extends HubProvider {
     let name: string;
 
     if (providerType === 'pinata') {
-      hubUrl = 'hub.pinata.cloud/v1/';
+      hubUrl = 'hub-grpc.pinata.cloud';
       name = 'publicPinataHub';
     } else {
       hubUrl = 'nemes.farcaster.xyz:2283';

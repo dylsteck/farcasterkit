@@ -6,13 +6,13 @@ import { ConnectedAddresses } from "../types";
 export default function getConnectedAddresses(provider: Provider, fid: number, ethereum?: boolean, solana?: boolean): ConnectedAddresses {
     let addresses: ConnectedAddresses;
 
-    if(provider instanceof HubProvider) {
-        if(provider.psqlUrl)
+    if (provider instanceof HubProvider) {
+        if (provider.psqlUrl)
             addresses = getConnectedAddressesFromReplicator(provider.psqlUrl, fid, ethereum, solana);
         else
             addresses = getConnectedAddressesFromHub(provider.hubUrl, fid, ethereum, solana);
     }
-    else if( provider instanceof NeynarProvider) {
+    else if (provider instanceof NeynarProvider) {
         addresses = getConnectedAddressesFromNeynar(provider, fid, ethereum, solana);
     }
     else {
@@ -50,30 +50,30 @@ function getConnectedAddressesFromHub(hubUrl: string, fid: number, ethereum?: bo
     const client = getSSLHubRpcClient(hubUrl);
 
     try {
-        const verificationResponse = client.getVerificationsByFid({fid: fid});
+        const verificationResponse = client.getVerificationsByFid({ fid: fid });
 
         if (verificationResponse.isOk() && verificationResponse.value) {
             verificationResponse.value.messages.forEach((verification) => {
 
-                if(verification.data?.verificationAddAddressBody?.protocol === 0){ // protocol === 0 guarantees only ETH addresses
-                    const addressBytes = verification.data?.verificationAddAddressBody.address; 
-                    const address = `0x${Buffer.from(addressBytes).toString('hex')}`; 
-                    addresses.all.push(address); 
-                    addresses.ethereum.push(address); 
+                if (verification.data?.verificationAddAddressBody?.protocol === 0) { // protocol === 0 guarantees only ETH addresses
+                    const addressBytes = verification.data?.verificationAddAddressBody.address;
+                    const address = `0x${Buffer.from(addressBytes).toString('hex')}`;
+                    addresses.all.push(address);
+                    addresses.ethereum.push(address);
                 }
 
-                if(verification.data?.verificationAddAddressBody?.protocol === 1){ // protocol === 1 guarantees only SOL addresses
+                if (verification.data?.verificationAddAddressBody?.protocol === 1) { // protocol === 1 guarantees only SOL addresses
                     const addressBytes = verification.data?.verificationAddAddressBody.address;
-                    const address = `${Buffer.from(addressBytes).toString('hex')}`; 
-                    addresses.all.push(address); 
-                    addresses.solana.push(address); 
+                    const address = `${Buffer.from(addressBytes).toString('hex')}`;
+                    addresses.all.push(address);
+                    addresses.solana.push(address);
                 }
 
             });
         }
     } catch (e) {
         console.error(e);
-        throw new Error("Error getting verifications from hub", e);
+        throw new Error("Error getting verifications from hub");
     }
     return addresses;
 }
@@ -85,5 +85,7 @@ function getConnectedAddressesFromNeynar(provider: NeynarProvider, fid: number, 
         solana: [],
     };
     // ...
+    
+
     throw new Error("Not implemented");
 }

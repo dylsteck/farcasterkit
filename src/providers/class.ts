@@ -15,7 +15,7 @@ export class HubProvider extends Provider {
   /**
    * HubProvider for getting Data with Farcaster Hubs and optional PostgreSQL Replicator
    * @param name the custom name of the provider. useful for debugging output
-   * @param hubUrl the Farcaster Hub URL to use
+   * @param hubUrl the Farcaster Hub gRPC endpoint to use !use gRPC!
    * @param psqlUrl optional: the PostgreSQL Replicator URL to use. Defaults to undefined
    */
   constructor(name: string, hubUrl: string, psqlUrl?: string) {
