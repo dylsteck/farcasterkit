@@ -32,3 +32,15 @@ If you offer data APIs that you'd wish to be included please refer to [Contribut
 
 ### Adding Providers
 
+Have a look at `src/providers/thirdpartyProvider.ts` which is a template for adding new Providers.
+
+Then register your Provider class with a  `nameProvider.ts` file in `src/providers/thirdparty/` with creation of your class.
+
+your file needs to export a Provider that extens the ThirdPartyProvider like the following code sample
+
+```typescript
+export class NameProvider extends ThirdParty {
+    // add constructor to init your values
+    // like an API key etc ...
+}
+```
