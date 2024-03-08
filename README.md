@@ -10,6 +10,8 @@ You need to get Farcaster data and need to read all API documentations and even 
 npm install @dtechvision/farcasterkit
 ```
 
+![use farcasterkit to get Farcaster Data easily using Typescript](logo.png)
+
 ## Ressources
 
 - [NPM]- TODO
