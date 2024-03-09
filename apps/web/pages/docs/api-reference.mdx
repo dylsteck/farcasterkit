@@ -66,13 +66,13 @@ note: in order to use these Neynar routes, you'll need your Neynar `api_key` han
 ##### GET neynar/signer
 a GET request that fetches the status of a signer via Neynar
 
-Input: 
+Input:
 - sample input
 
 ##### POST neynar/signer
 a POST request to get a signer from Neynar
 
-Input: 
+Input:
 - sample input
 
 #### Cast
@@ -80,5 +80,123 @@ Input:
 ##### POST neynar/cast
 a POST request to cast to Farcaster via Neynar
 
-Input: 
+Input:
 - sample input
+
+### OpenRank Graph API
+
+#### POST openrank/rankings
+a POST request that returns a global rank, score, follower/following count, likes, replies, recasts, and mentions
+
+Input:
+- strategy - 'follows' | 'engagement' | 'activity' | 'og_circles' | 'og_engagement' | 'og_activity'
+- limit - number (optional)
+- offset - number (optional)
+
+#### POST openrank/ranking_index
+a POST request that returns a cast given its hash
+
+Input:
+- strategy - 'follows' | 'engagement' | 'activity' | 'og_circles' | 'og_engagement' | 'og_activity'
+- username - string
+
+#### POST openrank/graph/neighbors/engagement/handles
+a POST request that returns a list of handles that the input handles have engaged with given a list of input handles,
+
+We do a BFS traversal of the social engagement graph upto k degrees and terminate traversal when limit is reached.
+
+Example: ["v", "vitalik.eth"]
+
+Input:
+- handles - string[]
+- k - number (optional)
+- limit - number (optional)
+
+#### POST openrank/graph/neighbors/following/handles
+a POST request that returns a list of handles that the input handles are following given a list of input handles,
+
+We do a BFS traversal of the social engagement graph upto k degrees and terminate traversal when limit is reached.
+
+Example: ["v", "vitalik.eth"]
+
+Input:
+- handles - string[]
+- k - number (optional)
+- limit - number (optional)
+
+#### POST openrank/graph/neighbors/engagement/addresses
+a POST request that returns a list of addresses that the input addresses have engaged with given a list of input addresses,
+
+We do a BFS traversal of the social engagement graph upto k degrees and terminate traversal when limit is reached.
+
+Example: ["0x8fc5d6afe572fefc4ec153587b63ce543f6fa2ea", "0xb877f7bb52d28f06e60f557c00a56225124b357f"]
+
+Input:
+- addresses - string[]
+- k - number (optional)
+- limit - number (optional)
+
+#### POST openrank/graph/neighbors/following/addresses
+a POST request that returns a list of addresses that the input addresses are following given a list of input addresses,
+
+We do a BFS traversal of the social engagement graph upto k degrees and terminate traversal when limit is reached.
+
+Example: ["0x8fc5d6afe572fefc4ec153587b63ce543f6fa2ea", "0xb877f7bb52d28f06e60f557c00a56225124b357f"]
+
+Input:
+- addresses - string[]
+- k - number (optional)
+- limit - number (optional)
+
+#### POST openrank/scores/personalized/engagement/addresses
+a POST request that returns a list of addresses trusted by the extended network of the input addresses given a list of input addresses.
+
+The addresses in the result are ranked by a relative scoring mechanism that is based on the EigenTrust algorithm.
+
+The extended network is derived based on a BFS traversal of the social engagement graph upto k degrees and until limit is reached.
+
+Example: ["0x4114e33eb831858649ea3702e1c9a2db3f626446", "0x8773442740c17c9d0f0b87022c722f9a136206ed"]
+Input:
+- addresses - string[]
+- k - number (optional)
+- limit - number (optional)
+
+
+#### POST openrank/scores/personalized/following/addresses
+a POST request that returns a list of addresses trusted by the extended network of the input addresses given a list of input addresses.
+
+The addresses in the result are ranked by a relative scoring mechanism that is based on the EigenTrust algorithm.
+
+The extended network is derived based on a BFS traversal of the social following graph upto k degrees and until limit is reached.
+
+Example: ["0x4114e33eb831858649ea3702e1c9a2db3f626446", "0x8773442740c17c9d0f0b87022c722f9a136206ed"]
+Input:
+- addresses - string[]
+- k - number (optional)
+- limit - number (optional)
+
+#### POST openrank/scores/personalized/engagement/handles
+a POST request that returns a list of handles trusted by the extended network of the input handles given a list of input handles.
+
+The handles in the result are ranked by a relative scoring mechanism that is based on the EigenTrust algorithm.
+
+The extended network is derived based on a BFS traversal of the social following graph upto k degrees and until limit is reached.
+
+Example: ["0x4114e33eb831858649ea3702e1c9a2db3f626446", "0x8773442740c17c9d0f0b87022c722f9a136206ed"]
+Input:
+- handles - string[]
+- k - number (optional)
+- limit - number (optional)
+
+#### POST openrank/metadata/handles
+a POST request that returns a list of handles given a list of addresses.
+
+Input:
+- handles - string[]
+
+
+#### POST openrank/metadata/addresses
+a POST request that returns a list of addresses given a list of handles.
+
+Input:
+- addresses - string[]

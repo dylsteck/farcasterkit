@@ -7,6 +7,7 @@ import { UsersRouter } from "./modules/users/controller";
 import { PostHog } from 'posthog-node';
 import { NeynarRouter } from "modules/neynar/controller";
 import { ChannelsRouter } from "modules/channels/controller";
+import { OpenRank } from "modules/openrank/controller";
 
 // TODO: Posthog key isn't reading from  `process.env.POSTHOG_API_KEY as string`
 const posthog = new PostHog(process.env.POSTHOG_API_KEY as string, { host: 'https://app.posthog.com' });
@@ -40,6 +41,7 @@ export const createServer = () => {
      .use('/channels', ChannelsRouter)
      .use('/neynar', NeynarRouter)
      .use('/users', UsersRouter)
+     .use('/openrank', OpenRank)
   process.on('SIGINT', () => {
     posthog.flush();
     process.exit();
