@@ -1,4 +1,4 @@
-import { getSSLHubRpcClient, Message } from "@farcaster/hub-nodejs";
+import { queryClient } from "../queryClient";
 
 import { Provider, HubProvider, NeynarProvider } from "../providers";
 import { ConnectedAddresses } from "../types";
@@ -47,35 +47,9 @@ function getConnectedAddressesFromHub(hubUrl: string, fid: number, ethereum?: bo
         solana: [],
     };
 
-    const client = getSSLHubRpcClient(hubUrl);
+    
+    throw new Error("Not implemented");
 
-    try {
-        const verificationResponse = client.getVerificationsByFid({ fid: fid });
-
-        if (verificationResponse.isOk() && verificationResponse.value) {
-            verificationResponse.value.messages.forEach((verification) => {
-
-                if (verification.data?.verificationAddAddressBody?.protocol === 0) { // protocol === 0 guarantees only ETH addresses
-                    const addressBytes = verification.data?.verificationAddAddressBody.address;
-                    const address = `0x${Buffer.from(addressBytes).toString('hex')}`;
-                    addresses.all.push(address);
-                    addresses.ethereum.push(address);
-                }
-
-                if (verification.data?.verificationAddAddressBody?.protocol === 1) { // protocol === 1 guarantees only SOL addresses
-                    const addressBytes = verification.data?.verificationAddAddressBody.address;
-                    const address = `${Buffer.from(addressBytes).toString('hex')}`;
-                    addresses.all.push(address);
-                    addresses.solana.push(address);
-                }
-
-            });
-        }
-    } catch (e) {
-        console.error(e);
-        throw new Error("Error getting verifications from hub");
-    }
-    return addresses;
 }
 
 function getConnectedAddressesFromNeynar(provider: NeynarProvider, fid: number, ethereum?: boolean, solana?: boolean): ConnectedAddresses {
@@ -85,7 +59,7 @@ function getConnectedAddressesFromNeynar(provider: NeynarProvider, fid: number, 
         solana: [],
     };
     // ...
-    
+
 
     throw new Error("Not implemented");
 }

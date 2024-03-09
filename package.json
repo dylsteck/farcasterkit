@@ -51,6 +51,7 @@
     "@farcaster/auth-client": "^0.1.0",
     "@farcaster/auth-kit": "^0.2.1",
     "@farcaster/connect-kit": "^0.0.31",
+    "@tanstack/query-core": "^5.25.0",
     "@types/react": "^18.2.61",
     "@types/react-dom": "^18.2.19",
     "axios": "^1.6.5",
