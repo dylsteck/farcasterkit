@@ -1,1 +1,0 @@
-### auth/with-neynar
