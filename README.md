@@ -15,22 +15,34 @@ npm install @dtechvision/farcasterkit
 ## Ressources
 
 - [NPM]- TODO
-- [React Hooks] - SOON
-- [Farcaster Channel] - Whut? wow!
-- [Docs] - SOON, for now github Issues
+- [React Hooks for FarcasterKit](https://github.com/dtechvision/farcasterkit-hooks)
+- [Farcaster Channel] - Whut? wow! use [/fc-devs](https://warpcast.com/~/channel/fc-devs)
+- [Docs] - SOON, for now github Issues + Code
 - [Looking for Developers? / need Help?] - cast @samuellhuber or any Maintainer on Farcaster for now
 
 ## Overview
 
+// soon
+
 ## Providers
+
+// documentation soon so far [this](#adding-providers)
 
 ## Contributing
 
 If you offer data APIs that you'd wish to be included please refer to [Contributing - Adding Providers](#adding-providers)
 
+### Code
+
+1) Fork the repository: [Click here to fork on Github](https://github.com/dtechvision/farcasterkit/fork)
+1) make your contribution and commit it: ```git add . & git commit -a```
+1) Push your changes to your fork: ```git push```
+1) Open a Pull Request against develop branch: [here on Github](https://github.com/dtechvision/farcasterkit/pulls)
+1) Answer to Review Questions and contribute!
+
 ### Feedback & Ideas (non devs welcome!)
 
-### Code
+You're welcome to open [Github Issues](https://github.com/dtechvision/farcasterkit/issues/new) to describe your ideas right here.
 
 ### Adding Providers
 
