@@ -1,4 +1,4 @@
-import { type PublicClient, type WalletClient } from 'viem';
+import { type PublicClient, type WalletClient, readContract, simulateContract, writeContract } from 'viem';
 import { CONTRACTS } from '../constants/contracts.js';
 import { KEY_REGISTRY_ABI } from '../constants/abis.js';
 import type { KeyData } from '../types/index.js';
@@ -10,7 +10,7 @@ export const keyRegistry = {
       fid: bigint,
       key: `0x${string}`
     ): Promise<number> {
-      return client.readContract({
+      return readContract(client, {
         address: CONTRACTS.KEY_REGISTRY,
         abi: KEY_REGISTRY_ABI,
         functionName: 'keys',
@@ -23,7 +23,7 @@ export const keyRegistry = {
       fid: bigint,
       key: `0x${string}`
     ): Promise<KeyData> {
-      return client.readContract({
+      return readContract(client, {
         address: CONTRACTS.KEY_REGISTRY,
         abi: KEY_REGISTRY_ABI,
         functionName: 'keyDataOf',
@@ -38,7 +38,7 @@ export const keyRegistry = {
       startIdx: bigint,
       batchSize: bigint
     ): Promise<readonly `0x${string}`[]> {
-      return client.readContract({
+      return readContract(client, {
         address: CONTRACTS.KEY_REGISTRY,
         abi: KEY_REGISTRY_ABI,
         functionName: 'keysOf',
@@ -55,26 +55,26 @@ export const keyRegistry = {
       metadataType: number,
       metadata: `0x${string}`
     ): Promise<`0x${string}`> {
-      const { request } = await (client as any).simulateContract({
+      const { request } = await simulateContract(client, {
         address: CONTRACTS.KEY_REGISTRY,
         abi: KEY_REGISTRY_ABI,
         functionName: 'add',
         args: [keyType, key, metadataType, metadata],
       });
-      return (client as any).writeContract(request);
+      return writeContract(client, request);
     },
 
     async remove(
       client: WalletClient,
       key: `0x${string}`
     ): Promise<`0x${string}`> {
-      const { request } = await (client as any).simulateContract({
+      const { request } = await simulateContract(client, {
         address: CONTRACTS.KEY_REGISTRY,
         abi: KEY_REGISTRY_ABI,
         functionName: 'remove',
         args: [key],
       });
-      return (client as any).writeContract(request);
+      return writeContract(client, request);
     },
   },
 };

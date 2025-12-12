@@ -1,11 +1,11 @@
-import { type PublicClient, type WalletClient } from 'viem';
+import { type PublicClient, type WalletClient, readContract, simulateContract, writeContract } from 'viem';
 import { CONTRACTS } from '../constants/contracts.js';
 import { STORAGE_REGISTRY_ABI } from '../constants/abis.js';
 
 export const storageRegistry = {
   read: {
     async rentedUnits(client: PublicClient, fid: bigint): Promise<bigint> {
-      return client.readContract({
+      return readContract(client, {
         address: CONTRACTS.STORAGE_REGISTRY,
         abi: STORAGE_REGISTRY_ABI,
         functionName: 'rentedUnits',
@@ -14,7 +14,7 @@ export const storageRegistry = {
     },
 
     async price(client: PublicClient, units: bigint): Promise<bigint> {
-      return client.readContract({
+      return readContract(client, {
         address: CONTRACTS.STORAGE_REGISTRY,
         abi: STORAGE_REGISTRY_ABI,
         functionName: 'price',
@@ -23,7 +23,7 @@ export const storageRegistry = {
     },
 
     async deprecationTimestamp(client: PublicClient): Promise<bigint> {
-      return client.readContract({
+      return readContract(client, {
         address: CONTRACTS.STORAGE_REGISTRY,
         abi: STORAGE_REGISTRY_ABI,
         functionName: 'deprecationTimestamp',
@@ -38,14 +38,14 @@ export const storageRegistry = {
       units: bigint,
       value: bigint
     ): Promise<`0x${string}`> {
-      const { request } = await (client as any).simulateContract({
+      const { request } = await simulateContract(client, {
         address: CONTRACTS.STORAGE_REGISTRY,
         abi: STORAGE_REGISTRY_ABI,
         functionName: 'rent',
         args: [fid, units],
         value,
       });
-      return (client as any).writeContract(request);
+      return writeContract(client, request);
     },
 
     async batchRent(
@@ -54,14 +54,14 @@ export const storageRegistry = {
       units: bigint[],
       value: bigint
     ): Promise<`0x${string}`> {
-      const { request } = await (client as any).simulateContract({
+      const { request } = await simulateContract(client, {
         address: CONTRACTS.STORAGE_REGISTRY,
         abi: STORAGE_REGISTRY_ABI,
         functionName: 'batchRent',
         args: [fids, units],
         value,
       });
-      return (client as any).writeContract(request);
+      return writeContract(client, request);
     },
 
     async credit(
@@ -69,13 +69,13 @@ export const storageRegistry = {
       fid: bigint,
       units: bigint
     ): Promise<`0x${string}`> {
-      const { request } = await (client as any).simulateContract({
+      const { request } = await simulateContract(client, {
         address: CONTRACTS.STORAGE_REGISTRY,
         abi: STORAGE_REGISTRY_ABI,
         functionName: 'credit',
         args: [fid, units],
       });
-      return (client as any).writeContract(request);
+      return writeContract(client, request);
     },
   },
 };
