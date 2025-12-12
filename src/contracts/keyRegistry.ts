@@ -1,4 +1,5 @@
-import { type PublicClient, type WalletClient, readContract, simulateContract, writeContract } from 'viem';
+import { type PublicClient, type WalletClient } from 'viem';
+import { readContract, simulateContract, writeContract } from 'viem/actions';
 import { CONTRACTS } from '../constants/contracts.js';
 import { KEY_REGISTRY_ABI } from '../constants/abis.js';
 import type { KeyData } from '../types/index.js';

@@ -1,4 +1,5 @@
-import { type Address, type WalletClient, simulateContract, writeContract } from 'viem';
+import { type Address, type WalletClient } from 'viem';
+import { simulateContract, writeContract } from 'viem/actions';
 import { CONTRACTS } from '../constants/contracts.js';
 import { ID_GATEWAY_ABI, KEY_GATEWAY_ABI, BUNDLER_ABI } from '../constants/abis.js';
 import type { RegisterParams, SignerParams } from '../types/index.js';
