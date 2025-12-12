@@ -1,10 +1,10 @@
-# FarcasterKit
+# Farcaster Kit
 
-Typesafe TypeScript library for interacting with Farcaster's Snapchain HTTP API and Optimism contracts.
+Typesafe TypeScript library for interacting with [Farcaster](https://farcaster.xyz)'s Snapchain HTTP API and Optimism contracts.
 
 ## Overview
 
-FarcasterKit provides a set of lightweight, performant, and type-safe TypeScript utilities for building Farcaster applications. It offers:
+Farcaster Kit provides a set of lightweight, performant, and type-safe TypeScript utilities for building Farcaster applications. It offers:
 
 - **HTTP Client** – Access all Snapchain REST endpoints with full type safety
 - **Contract Helpers** – Read and write to Farcaster contracts on Optimism
@@ -78,6 +78,8 @@ const txHash = await fc.idGateway.write.register(
 ```
 
 ## API Reference
+
+[View complete API documentation →](./docs/overview.md)
 
 ### HTTP Methods
 
@@ -161,4 +163,4 @@ describe('My Tests', () => {
 
 ## License
 
-MIT
+[MIT Licensed 2025-present](LICENSE.md) by [Dylan Steck](https://dylansteck.com)
