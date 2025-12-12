@@ -1,135 +1,164 @@
-# farcaster kit
+# FarcasterKit
 
-This Turborepo starter is maintained by the Turborepo core team.
+Typesafe TypeScript library for interacting with Farcaster's Snapchain HTTP API and Optimism contracts.
 
-## Using this example
+## Overview
 
-Run the following command:
+FarcasterKit provides a set of lightweight, performant, and type-safe TypeScript utilities for building Farcaster applications. It offers:
 
-```sh
-npx create-turbo@latest
+- **HTTP Client** – Access all Snapchain REST endpoints with full type safety
+- **Contract Helpers** – Read and write to Farcaster contracts on Optimism
+- **Test Utilities** – Built-in mocking support for reliable testing
+
+Built with [Zile](https://github.com/wevm/zile) for a bundler-free, zero-config experience.
+
+## Installation
+
+```bash
+npm install farcasterkit viem
 ```
 
-## What's inside?
+## Example Usage
 
-This Turborepo includes the following packages/apps:
+### HTTP API
 
-### Apps and Packages
+```typescript
+import { FarcasterKit } from 'farcasterkit';
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
+const fc = new FarcasterKit();
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-### Build
-
-To build all apps and packages, run the following command:
-
-```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build
-yarn dlx turbo build
-pnpm exec turbo build
+const info = await fc.getInfo();
+const casts = await fc.getCastsByFid(2);
+const userData = await fc.getUserDataByFid(2);
+const fids = await fc.getFidsByAddress('0x...');
 ```
 
-You can build a specific package by using a [filter](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters):
+### Contract Reads
 
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build --filter=docs
+```typescript
+import { FarcasterKit } from 'farcasterkit';
+import { optimism } from 'viem/chains';
 
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build --filter=docs
-yarn exec turbo build --filter=docs
-pnpm exec turbo build --filter=docs
-```
+const fc = new FarcasterKit('https://snap.farcaster.xyz:3381', {
+  chain: optimism,
+  rpcUrl: 'https://mainnet.optimism.io',
+});
 
-### Develop
-
-To develop all apps and packages, run the following command:
-
-```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev
-yarn exec turbo dev
-pnpm exec turbo dev
+const fid = await fc.getFid('0x4114e33eb831858649ea3702e1c9a2db3f626446');
+const storage = await fc.getStorage(2);
+const custody = await fc.idRegistry.read.custodyOf(fc.viemClient, 2n);
+const price = await fc.storageRegistry.read.price(fc.viemClient, 1n);
 ```
 
-You can develop a specific package by using a [filter](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters):
+### Contract Writes
 
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev --filter=web
+```typescript
+import { FarcasterKit } from 'farcasterkit';
+import { createWalletClient, http } from 'viem';
+import { privateKeyToAccount } from 'viem/accounts';
+import { optimism } from 'viem/chains';
 
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev --filter=web
-yarn exec turbo dev --filter=web
-pnpm exec turbo dev --filter=web
-```
+const account = privateKeyToAccount('0x...');
+const walletClient = createWalletClient({
+  account,
+  chain: optimism,
+  transport: http(),
+});
 
-### Remote Caching
+const fc = new FarcasterKit('https://snap.farcaster.xyz:3381', {
+  walletClient,
+});
 
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
-
-Turborepo can use a technique known as [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
-
-```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo login
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo login
-yarn exec turbo login
-pnpm exec turbo login
+const txHash = await fc.idGateway.write.register(
+  walletClient,
+  '0xRecoveryAddress',
+  5n,
+  BigInt(0.01 * 1e18)
+);
 ```
 
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
+## API Reference
 
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
+### HTTP Methods
 
+**Casts**
+- `getCastsByFid(fid, options?)` – Get casts by FID
+- `getCastById(fid, hash)` – Get specific cast
+- `getCastsByParent(parentFid, parentHash, options?)` – Get replies
+- `getCastsByMention(fid, options?)` – Get casts mentioning FID
+
+**Users**
+- `getUserDataByFid(fid, options?)` – Get user profile data
+- `getFidsByAddress(address)` – Get FIDs for address
+
+**Social**
+- `getLinksByFid(fid, options?)` – Get follows/links
+- `getReactionsByFid(fid, reactionType?, options?)` – Get likes/recasts
+- `getReactionsByCast(targetFid, targetHash, reactionType?, options?)` – Get reactions to cast
+
+**Verifications**
+- `getVerificationsByFid(fid, options?)` – Get address verifications
+- `getUsernameProofsByFid(fid)` – Get username proofs
+
+**Advanced**
+- `getMessagesByFid(fid, options?)` – Get all messages
+- `getEventsByFid(fid, options?)` – Get hub events
+- `getStorageByFid(fid)` – Get storage allocation
+- `getOnChainByFid(fid, options?)` – Get on-chain events
+- `getInfo()` – Get hub information
+
+### Contract Helpers
+
+**IdRegistry** – FID registration and management
+- `read.idOf(client, address)` / `read.custodyOf(client, fid)` / `read.recoveryOf(client, fid)`
+- `write.transfer(client, to, deadline, sig)` / `write.changeRecovery(client, recovery)`
+
+**KeyRegistry** – Signer key management
+- `read.keys(client, fid, key)` / `read.keyDataOf(client, fid, key)` / `read.keysOf(client, fid, state, startIdx, batchSize)`
+- `write.add(client, keyType, key, metadataType, metadata)` / `write.remove(client, key)`
+
+**StorageRegistry** – Storage unit management
+- `read.rentedUnits(client, fid)` / `read.price(client, units)` / `read.deprecationTimestamp(client)`
+- `write.rent(client, fid, units, value)` / `write.batchRent(client, fids, units, value)` / `write.credit(client, fid, units)`
+
+**Gateways** – Registration and key addition
+- `idGateway.write.register(client, recovery, extraStorage, value)`
+- `keyGateway.write.add(client, keyType, key, metadataType, metadata)`
+- `bundler.write.register(client, registerParams, signerParams, extraStorage, value)`
+
+## Testing
+
+All tests use mocked HTTP and viem clients for reliability:
+
+```typescript
+import { createHttpClient } from 'farcasterkit';
+import { mockFetch, createMockPublicClient } from 'farcasterkit/jest.setup';
+
+describe('My Tests', () => {
+  it('should mock HTTP calls', async () => {
+    mockFetch({ messages: [] });
+    const client = createHttpClient();
+    const result = await getCastsByFid(client, 2);
+    expect(result.messages).toEqual([]);
+  });
+
+  it('should mock viem reads', async () => {
+    const mockClient = createMockPublicClient();
+    mockClient.readContract.mockResolvedValue(2n);
+    
+    const fid = await idRegistry.read.idOf(mockClient, '0x...');
+    expect(fid).toBe(2n);
+  });
+});
 ```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo link
 
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo link
-yarn exec turbo link
-pnpm exec turbo link
-```
+## Resources
 
-## Useful Links
+- [Farcaster Contracts Reference](https://docs.farcaster.xyz/reference/contracts/)
+- [Snapchain HTTP API](https://docs.farcaster.xyz/reference/hubble/httpapi/httpapi)
+- [Viem Documentation](https://viem.sh)
+- [Zile Build Tool](https://github.com/wevm/zile)
 
-Learn more about the power of Turborepo:
+## License
 
-- [Tasks](https://turborepo.com/docs/crafting-your-repository/running-tasks)
-- [Caching](https://turborepo.com/docs/crafting-your-repository/caching)
-- [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching)
-- [Filtering](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters)
-- [Configuration Options](https://turborepo.com/docs/reference/configuration)
-- [CLI Usage](https://turborepo.com/docs/reference/command-line-reference)
+MIT

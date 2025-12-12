@@ -1,25 +1,55 @@
 {
-  "name": "farcasterkit",
-  "author": "dylsteck",
-  "private": true,
   "scripts": {
-    "build": "turbo run build",
-    "dev": "turbo run dev",
-    "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "check-types": "turbo run check-types"
+    "build": "zile",
+    "changeset:publish": "zile publish:prepare && changeset publish && zile publish:post",
+    "changeset:version": "changeset version",
+    "check": "biome check --fix --unsafe",
+    "check:types": "tsc",
+    "dev": "zile dev",
+    "test": "jest"
   },
   "devDependencies": {
-    "prettier": "^3.6.2",
-    "turbo": "^2.5.8",
-    "typescript": "5.9.2"
+    "@biomejs/biome": "latest",
+    "@changesets/cli": "latest",
+    "@types/jest": "^29.5.12",
+    "@types/node": "latest",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.1.2",
+    "typescript": "latest",
+    "zile": "latest"
   },
-  "engines": {
-    "node": ">=18"
+  "packageManager": "bun@1.3.4",
+  "[!start-pkg]": "",
+  "name": "farcasterkit",
+  "type": "module",
+  "version": "0.0.0",
+  "main": "./dist/index.js",
+  "license": "MIT",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "exports": {
+    ".": {
+      "src": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./http": {
+      "src": "./src/http/index.ts",
+      "types": "./dist/http/index.d.ts",
+      "default": "./dist/http/index.js"
+    },
+    "./contracts": {
+      "src": "./src/contracts/index.ts",
+      "types": "./dist/contracts/index.d.ts",
+      "default": "./dist/contracts/index.js"
+    }
   },
-  "packageManager": "bun@1.3.3",
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ]
+  "dependencies": {
+    "viem": "latest"
+  },
+  "sideEffects": false,
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts"
 }

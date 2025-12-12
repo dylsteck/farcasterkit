@@ -34,3 +34,10 @@ yarn-error.log*
 
 # vercel
 .vercel
+
+# bun
+bun.lock
+bun.lockb
+
+# dist
+dist
